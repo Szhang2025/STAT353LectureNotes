@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probability & Statistics · Problem‑Solving Introduction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #f2f7fc;
+            margin: 0;
+            padding: 24px 16px;
+            color: #0a2a3b;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #09344b;
+            border-left: 8px solid #1d7aa6;
+            padding-left: 18px;
+            margin-bottom: 8px;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #2a5f7a;
+            margin-top: 0;
+            margin-bottom: 32px;
+            padding-left: 26px;
+            font-weight: 400;
+        }
+
+        .dropdown-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .dropdown-controls button {
+            background: #1d7aa6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 6px rgba(29, 122, 166, 0.25);
+        }
+        .dropdown-controls button:hover {
+            background: #145f82;
+            transform: translateY(-1px);
+        }
+        .dropdown-controls button:active {
+            transform: translateY(0);
+        }
+
+        .topic-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        details.topic-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px rgba(0, 20, 30, 0.05), 0 1px 4px rgba(0, 0, 0, 0.02);
+            border: 1px solid #d0e3f0;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        details.topic-card:hover {
+            box-shadow: 0 8px 24px rgba(19, 81, 115, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        details.topic-card[open] {
+            box-shadow: 0 10px 28px rgba(19, 81, 115, 0.10), 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        summary.topic-header {
+            background: #e2f0fa;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+            transition: background 0.15s;
+            border-bottom: 2px solid transparent;
+        }
+        summary.topic-header::-webkit-details-marker {
+            display: none;
+        }
+        summary.topic-header::marker {
+            display: none;
+            content: "";
+        }
+        details.topic-card[open] > summary.topic-header {
+            border-bottom: 2px solid #b8d4e5;
+            background: #d9ecf7;
+        }
+        summary.topic-header:hover {
+            background: #d0e6f5;
+        }
+        .chevron {
+            margin-left: auto;
+            font-size: 1.1rem;
+            color: #1d7aa6;
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+        details.topic-card[open] .chevron {
+            transform: rotate(180deg);
+        }
+
+        .topic-number {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0e4c6b;
+            background: #ffffff;
+            border-radius: 40px;
+            width: 48px;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            flex-shrink: 0;
+        }
+        .topic-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0d3b50;
+            letter-spacing: -0.01em;
+        }
+
+        .topic-body {
+            padding: 22px 26px 26px 26px;
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro {
+            background: #f0f7fd;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #1d7aa6;
+            color: #13455c;
+            font-size: 1.02rem;
+            line-height: 1.6;
+        }
+        .intro strong {
+            color: #073d59;
+        }
+        .intro code {
+            background: #d9e8f2;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.92rem;
+            color: #04425e;
+        }
+        .math {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.08em;
+            color: #04425e;
+            font-style: italic;
+        }
+        .math-block {
+            display: block;
+            text-align: center;
+            background: #e9f2f8;
+            padding: 14px 20px;
+            border-radius: 14px;
+            margin: 12px 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.1em;
+            color: #04425e;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+        .math-inline {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 1.05em;
+            color: #04425e;
+            background: #eef5fa;
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+        .exercise {
+            background: #f6fbfe;
+            border-radius: 18px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            border-left: 6px solid #217ca8;
+        }
+        .exercise p {
+            margin: 0 0 8px 0;
+            font-weight: 500;
+            color: #13455c;
+            font-size: 1.08rem;
+        }
+        .exercise .question {
+            font-weight: 600;
+            color: #074258;
+            background: #ffffffd0;
+            padding: 6px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            letter-spacing: 0.01em;
+        }
+        .solution {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px 22px;
+            border: 1px solid #cfe2f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .solution-steps {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 8px 0 0 0;
+        }
+        .solution-steps li {
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            line-height: 1.6;
+            color: #1b3f52;
+            font-size: 0.98rem;
+        }
+        .solution-steps li::before {
+            content: "▹";
+            color: #1d7aa6;
+            font-weight: bold;
+            position: absolute;
+            left: 8px;
+            top: 0;
+        }
+        .formula {
+            background: #e9f2f8;
+            padding: 3px 12px;
+            border-radius: 24px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-weight: 500;
+            color: #04425e;
+            display: inline-block;
+            margin: 4px 0;
+            font-size: 0.96rem;
+        }
+        .badge {
+            background: #d2e9f5;
+            color: #0a3b52;
+            font-weight: 600;
+            font-size: 0.78rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+        .note {
+            background: #fff7e5;
+            border-left: 6px solid #d18f2c;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #4b3a1c;
+        }
+        .correction {
+            background: #fef2f2;
+            border-left: 6px solid #d9534f;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #7a2e2a;
+        }
+        .extra-box {
+            background: #f3f9ff;
+            border: 1px solid #c4dff0;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-top: 18px;
+        }
+        .extra-box h4 {
+            margin: 0 0 10px 0;
+            color: #0c4a68;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .extra-box ul {
+            margin: 6px 0;
+            padding-left: 22px;
+        }
+        .extra-box li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #1b3f52;
+        }
+        .highlight-box {
+            background: #e8f4e8;
+            border: 2px solid #4a9e4a;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin: 18px 0;
+        }
+        .highlight-box h4 {
+            margin: 0 0 10px 0;
+            color: #2a6b2a;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+        .highlight-box .math-block {
+            background: #ffffff;
+            border: 1px solid #b8ddb8;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1d5c1d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.92rem;
+        }
+        table th, table td {
+            border: 1px solid #bdd8e8;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        table th {
+            background: #d9ecf7;
+            color: #0a3b52;
+            font-weight: 600;
+        }
+        table td {
+            background: #ffffff;
+        }
+        .r-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.88rem;
+            overflow-x: auto;
+            margin: 10px 0;
+            line-height: 1.7;
+            white-space: pre;
+        }
+        .r-code .keyword { color: #569cd6; }
+        .r-code .string { color: #ce9178; }
+        .r-code .comment { color: #6a9955; }
+        .r-code .func { color: #dcdcaa; }
+        footer {
+            margin-top: 48px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #497a96;
+        }
+        @media (max-width: 600px) {
+            .topic-number { width: 40px; height: 40px; font-size: 1.2rem; }
+            .topic-title { font-size: 1.2rem; }
+            .topic-body { padding: 16px; }
+            .exercise, .solution, .intro, .extra-box, .highlight-box { padding: 14px; }
+            .r-code { font-size: 0.78rem; padding: 10px; }
+            table { font-size: 0.82rem; }
+            .math-block { font-size: 0.95em; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📘 Problem‑Solving Introduction to Probability & Statistics</h1>
+    <div class="subhead">22 topics · logically ordered from probability foundations to statistical inference & applications</div>
+
+    <div class="dropdown-controls">
+        <button type="button" onclick="expandAll()">⬇ Expand All</button>
+        <button type="button" onclick="collapseAll()">⬆ Collapse All</button>
+    </div>
+
+    <div class="topic-grid">
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART I: PROBABILITY FOUNDATIONS                                -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 01 Sample Space, Events & Counting -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">01</span>
+                <span class="topic-title">Sample Space, Events & Counting</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> A sample space (<span class="math-inline">S</span>) lists all possible outcomes. An event is a subset of <span class="math-inline">S</span>. Counting rules (multiplication, permutations, combinations) help count outcomes without listing.</div>
+
+                <div class="extra-box">
+                    <h4>📌 Key Definitions & Notation</h4>
+                    <ul>
+                        <li><strong>Sample space (<span class="math-inline">S</span>):</strong> The set of all possible outcomes. Example: rolling a die → <span class="math-inline">S = {1,2,3,4,5,6}</span>.</li>
+                        <li><strong>Event:</strong> A subset of <span class="math-inline">S</span>. Example: <span class="math-inline">A</span> = "roll an even number" = <span class="math-inline">{2,4,6}</span>.</li>
+                        <li><strong>Union (<span class="math-inline">A ∪ B</span>):</strong> Outcomes in <span class="math-inline">A</span> or <span class="math-inline">B</span> (or both).</li>
+                        <li><strong>Intersection (<span class="math-inline">A ∩ B</span>):</strong> Outcomes in both <span class="math-inline">A</span> and <span class="math-inline">B</span>.</li>
+                        <li><strong>Complement (<span class="math-inline">Aᶜ</span> or <span class="math-inline">A'</span>):</strong> Outcomes in <span class="math-inline">S</span> but not in <span class="math-inline">A</span>.</li>
+                        <li><strong>Disjoint (mutually exclusive):</strong> <span class="math-inline">A ∩ B = ∅</span>, so <span class="math-inline">P(A ∩ B) = 0</span>.</li>
+                        <li><strong>Multiplication rule:</strong> If a task has <span class="math-inline">k</span> steps with <span class="math-inline">n₁, n₂, …, nₖ</span> choices → <span class="math-inline">n₁ × n₂ × … × nₖ</span> total outcomes.</li>
+                        <li><strong>Permutation:</strong> <span class="math-inline">P(n,r) = n! / (n−r)!</span> (order matters).</li>
+                        <li><strong>Combination:</strong> <span class="math-inline">C(n,r) = n! / [r!(n−r)!]</span> (order doesn't matter).</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A bag contains 5 red, 4 blue, and 3 green marbles. Two marbles are drawn without replacement. (a) How many ordered outcomes are in the sample space? (b) How many outcomes are in the event “both marbles are the same color”? (c) How many outcomes are in the event “at least one red”? Express using set notation with the complement.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) Sample space:</strong> Ordered draws without replacement: first marble 12 choices, second 11 choices → <span class="math-inline">12 × 11 = 132</span> ordered outcomes.</li>
+                        <li><strong>(b) Same color event:</strong> Count ordered outcomes: <span class="math-inline">RR = 5×4 = 20</span>, <span class="math-inline">BB = 4×3 = 12</span>, <span class="math-inline">GG = 3×2 = 6</span>. Total = <span class="math-inline">20+12+6 = 38</span>.</li>
+                        <li><strong>Check with combinations:</strong> Unordered total <span class="math-inline">C(12,2)=66</span>. Same color unordered: <span class="math-inline">C(5,2)+C(4,2)+C(3,2)=10+6+3=19</span>. Doubling gives 38 ordered. ✅</li>
+                        <li><strong>(c) "At least one red" event:</strong> Let <span class="math-inline">R</span> = event that at least one red marble is drawn.</li>
+                        <li>The complement <span class="math-inline">Rᶜ</span> = "no red marbles," meaning both draws come from the 7 non-red marbles (4 blue + 3 green).</li>
+                        <li>Number of ordered outcomes in <span class="math-inline">Rᶜ</span>: <span class="math-inline">7 × 6 = 42</span>.</li>
+                        <li>Therefore, <span class="math-inline">|R| = 132 − 42 = 90</span>.</li>
+                        <li><strong>Set notation:</strong> <span class="math-inline">Rᶜ = { (x,y) ∈ S : x ∉ Red and y ∉ Red }</span> and <span class="math-inline">R = S \ Rᶜ</span>.</li>
+                        <li><strong>Answer:</strong> (a) 132 ordered outcomes. (b) 38 outcomes for “same color”. (c) 90 outcomes for "at least one red"; <span class="math-inline">R = S \ Rᶜ</span> where <span class="math-inline">Rᶜ</span> consists of ordered pairs drawn from the 7 non-red marbles.</li>
+                    </ul>
+                    <div class="correction">
+                        <strong>⚠️ Correction note:</strong> Earlier versions incorrectly wrote <span class="math-inline">Rᶜ = {BB, BG, GB, GG}</span>. This was wrong because those are color labels, not elements of the ordered sample space, and it ignored the multiplicity (counts) of each combination. The complement correctly contains 42 ordered outcomes, not 4.
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- 02 Probability of an Event -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">02</span>
+                <span class="topic-title">Probability of an Event</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> For equally likely outcomes, <span class="math-inline">P(A) = |A| / |S|</span>. Probability is always between 0 and 1, and <span class="math-inline">P(S)=1</span>.</div>
+                <div class="exercise"><span class="question">📌 Exercise</span> A fair six-sided die is rolled twice. What is the probability that the sum of the two rolls is 7 or 11?</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>Sample space:</strong> 36 equally likely ordered pairs <span class="math-inline">(1,1) … (6,6)</span>.</li>
+                        <li><strong>Event sum=7:</strong> <span class="math-inline">(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)</span> → 6 outcomes.</li>
+                        <li><strong>Event sum=11:</strong> <span class="math-inline">(5,6),(6,5)</span> → 2 outcomes. Disjoint from sum=7.</li>
+                        <li><strong>Total favorable:</strong> <span class="math-inline">6 + 2 = 8</span>.</li>
+                        <li><div class="math-block">P(sum=7 or 11) = 8/36 = 2/9 ≈ 0.2222</div></li>
+                        <li><strong>Answer:</strong> 2/9.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 03 Disjoint & Independent Events -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">03</span>
+                <span class="topic-title">Disjoint & Independent Events</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Disjoint events cannot occur together: <span class="math-inline">P(A∩B)=0</span>. Independent events satisfy <span class="math-inline">P(A∩B)=P(A)P(B)</span>. These are different ideas — disjoint events with positive probability are dependent.</div>
+                <div class="exercise"><span class="question">📌 Exercise</span> Let <span class="math-inline">A</span> and <span class="math-inline">B</span> be events with <span class="math-inline">P(A)=0.4</span>, <span class="math-inline">P(B)=0.5</span>, and <span class="math-inline">P(A∪B)=0.7</span>. (a) Are <span class="math-inline">A</span> and <span class="math-inline">B</span> disjoint? (b) Are they independent?</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li>(a) Disjoint means <span class="math-inline">P(A∩B)=0</span>. Using inclusion–exclusion: <span class="math-inline">P(A∪B)=P(A)+P(B)−P(A∩B)</span> → <span class="math-inline">0.7 = 0.4+0.5 − P(A∩B)</span> → <span class="math-inline">P(A∩B)=0.2 ≠ 0</span>. So not disjoint.</li>
+                        <li>(b) Independent if <span class="math-inline">P(A∩B)=P(A)P(B)</span>. <span class="math-inline">P(A)P(B)=0.4×0.5=0.2</span>, which equals <span class="math-inline">P(A∩B)=0.2</span>. Thus independent.</li>
+                        <li><strong>Answer:</strong> (a) No, not disjoint. (b) Yes, independent.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 04 Total Probability & Bayes' Formula -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">04</span>
+                <span class="topic-title">Total Probability & Bayes' Formula</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Total probability: <span class="math-inline">P(B) = Σ P(Aᵢ)P(B|Aᵢ)</span> over a partition. Bayes' theorem reverses conditioning: <span class="math-inline">P(A|B) = P(A)P(B|A) / P(B)</span>.</div>
+
+                <div class="extra-box">
+                    <h4>📌 What is a Partition?</h4>
+                    <ul>
+                        <li>A <strong>partition</strong> of a sample space <span class="math-inline">S</span> is a collection of events <span class="math-inline">A₁, A₂, …, Aₖ</span> that are:
+                            <ul>
+                                <li><strong>Mutually exclusive:</strong> <span class="math-inline">Aᵢ ∩ Aⱼ = ∅</span> for all <span class="math-inline">i ≠ j</span>.</li>
+                                <li><strong>Exhaustive:</strong> <span class="math-inline">A₁ ∪ A₂ ∪ … ∪ Aₖ = S</span>.</li>
+                            </ul>
+                        </li>
+                        <li>In other words, every outcome in <span class="math-inline">S</span> belongs to exactly one <span class="math-inline">Aᵢ</span>.</li>
+                        <li><strong>Example:</strong> For a die roll, <span class="math-inline">A₁ = {1,2}</span>, <span class="math-inline">A₂ = {3,4}</span>, <span class="math-inline">A₃ = {5,6}</span> form a partition.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A factory has two machines. Machine A produces 60% of items, Machine B produces 40%. 3% of A’s items are defective, 5% of B’s are defective. An item is chosen at random and found defective. What is the probability it came from Machine A?</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li>Let <span class="math-inline">D</span> = defective. <span class="math-inline">P(A)=0.6</span>, <span class="math-inline">P(B)=0.4</span>, <span class="math-inline">P(D|A)=0.03</span>, <span class="math-inline">P(D|B)=0.05</span>.</li>
+                        <li><strong>Total probability:</strong> <span class="math-inline">P(D) = P(A)P(D|A)+P(B)P(D|B) = 0.6×0.03 + 0.4×0.05 = 0.018+0.020=0.038</span>.</li>
+                        <li><strong>Bayes:</strong> <span class="math-inline">P(A|D) = P(A)P(D|A) / P(D) = 0.018 / 0.038 = 18/38 = 9/19 ≈ 0.4737</span>.</li>
+                        <li><strong>Answer:</strong> 9/19 ≈ 0.474.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART II: RANDOM VARIABLES & DISTRIBUTIONS                      -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 05 Discrete Random Variables -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">05</span>
+                <span class="topic-title">Discrete Random Variables</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> A discrete RV takes countable values with probabilities. <span class="math-inline">E(X)=Σ x·P(x)</span>, <span class="math-inline">Var(X)=E(X²)−[E(X)]²</span>.</div>
+
+                <div class="extra-box">
+                    <h4>📊 PMF, CDF & Key Distributions</h4>
+                    <ul>
+                        <li><strong>PMF (Probability Mass Function):</strong> <span class="math-inline">p(x) = P(X = x)</span>. Must satisfy: <span class="math-inline">p(x) ≥ 0</span> and <span class="math-inline">Σ p(x) = 1</span>.</li>
+                        <li><strong>CDF (Cumulative Distribution Function):</strong> <span class="math-inline">F(x) = P(X ≤ x) = Σ_{k≤x} p(k)</span>. It is non-decreasing, right-continuous, <span class="math-inline">F(−∞)=0</span>, <span class="math-inline">F(+∞)=1</span>.</li>
+                        <li><strong>Binomial Distribution:</strong> <span class="math-inline">X ~ Binomial(n,p)</span> = number of successes in <span class="math-inline">n</span> independent trials.
+                            <div class="math-block">P(X = k) = C(n,k) p^k (1−p)^{n−k}, &nbsp; k = 0, 1, …, n</div>
+                            <div class="math-block">E(X) = np, &nbsp; Var(X) = np(1−p)</div>
+                        </li>
+                        <li><strong>Geometric Distribution:</strong> <span class="math-inline">X ~ Geometric(p)</span> = number of trials until first success.
+                            <div class="math-block">P(X = k) = (1−p)^{k−1} p, &nbsp; k = 1, 2, 3, …</div>
+                            <div class="math-block">E(X) = 1/p, &nbsp; Var(X) = (1−p)/p²</div>
+                        </li>
+                        <li><strong>Poisson Distribution:</strong> <span class="math-inline">X ~ Poisson(λ)</span> = number of events in a fixed interval.
+                            <div class="math-block">P(X = k) = (λ^k e^{−λ}) / k!, &nbsp; k = 0, 1, 2, …</div>
+                            <div class="math-block">E(X) = λ, &nbsp; Var(X) = λ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> (a) <span class="math-inline">X ~ Binomial(n=3, p=0.5)</span>. Find <span class="math-inline">E(X)</span> and <span class="math-inline">Var(X)</span>. (b) Let <span class="math-inline">X ~ Geometric(p=0.2)</span>. Find <span class="math-inline">P(X=3)</span> and <span class="math-inline">E(X)</span>. (c) Let <span class="math-inline">X ~ Poisson(λ=4)</span>. Find <span class="math-inline">P(X=2)</span> and <span class="math-inline">Var(X)</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a)</strong> <span class="math-inline">X ~ Binomial(n=3, p=0.5)</span>. Probabilities: <span class="math-inline">P(0)=1/8</span>, <span class="math-inline">P(1)=3/8</span>, <span class="math-inline">P(2)=3/8</span>, <span class="math-inline">P(3)=1/8</span>.</li>
+                        <li><span class="math-inline">E(X) = np = 3×0.5 = 1.5</span>. <span class="math-inline">Var(X) = np(1−p) = 3×0.5×0.5 = 0.75</span>.</li>
+                        <li><strong>(b)</strong> <span class="math-inline">Geometric(p=0.2)</span>: <span class="math-inline">P(X=3) = (1−0.2)^{3−1}×0.2 = 0.8²×0.2 = 0.64×0.2 = 0.128</span>. <span class="math-inline">E(X) = 1/p = 1/0.2 = 5</span>.</li>
+                        <li><strong>(c)</strong> <span class="math-inline">Poisson(λ=4)</span>: <span class="math-inline">P(X=2) = (4² e^{−4}) / 2! = (16 × 0.018315) / 2 ≈ 0.1465</span>. <span class="math-inline">Var(X) = λ = 4</span>.</li>
+                        <li><strong>Answer:</strong> (a) <span class="math-inline">E(X)=1.5, Var(X)=0.75</span>. (b) <span class="math-inline">P(X=3)=0.128, E(X)=5</span>. (c) <span class="math-inline">P(X=2)≈0.1465, Var(X)=4</span>.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 06 Continuous Random Variables -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">06</span>
+                <span class="topic-title">Continuous Random Variables</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Continuous RVs have a probability density function (PDF). Probabilities are areas under the PDF. For <span class="math-inline">Uniform[a,b]</span>, <span class="math-inline">f(x)=1/(b−a)</span> on <span class="math-inline">[a,b]</span>.</div>
+
+                <div class="extra-box">
+                    <h4>📈 Exponential, Normal & Z‑score</h4>
+                    <ul>
+                        <li><strong>Exponential Distribution:</strong> <span class="math-inline">X ~ Exp(λ)</span>, <span class="math-inline">λ > 0</span> (rate).
+                            <div class="math-block">PDF: f(x) = λe^{−λx}, &nbsp; x ≥ 0</div>
+                            <div class="math-block">CDF: F(x) = 1 − e^{−λx}, &nbsp; x ≥ 0</div>
+                            <div class="math-block">Mean: E(X) = 1/λ, &nbsp; Variance: Var(X) = 1/λ²</div>
+                        </li>
+                        <li><strong>Normal Distribution:</strong> <span class="math-inline">X ~ N(μ, σ²)</span>.
+                            <div class="math-block">PDF: f(x) = (1/(σ√(2π))) e^{−(x−μ)²/(2σ²)}</div>
+                            <div class="math-block">Mean: E(X) = μ, &nbsp; Variance: Var(X) = σ²</div>
+                            <div class="math-block">Empirical Rule (68‑95‑99.7): ~68% within μ±σ, ~95% within μ±2σ, ~99.7% within μ±3σ</div>
+                        </li>
+                        <li><strong>Z‑score:</strong> Standardizes any normal value:
+                            <div class="math-block">z = (x − μ) / σ</div>
+                            Converts to standard normal <span class="math-inline">N(0,1)</span>.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> (a) Let <span class="math-inline">X ~ Uniform[2,8]</span>. Find <span class="math-inline">P(X<5)</span>, median, mean. (b) Let <span class="math-inline">X ~ Exp(λ=0.5)</span>. Find mean, std, <span class="math-inline">P(X>4)</span>. (c) Let <span class="math-inline">X ~ N(μ=100, σ=15)</span>. Find <span class="math-inline">P(X<115)</span> using z-score and state the empirical rule range for 95%.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) Uniform[2,8]:</strong> <span class="math-inline">f(x)=1/6</span>. <span class="math-inline">P(X<5) = (5−2)/6 = 0.5</span>. Median = <span class="math-inline">(2+8)/2 = 5</span>. Mean = <span class="math-inline">(2+8)/2 = 5</span>. Var = <span class="math-inline">(8−2)²/12 = 3</span>.</li>
+                        <li><strong>(b) Exp(λ=0.5):</strong> Mean = <span class="math-inline">1/λ = 2</span>. Std = <span class="math-inline">1/λ = 2</span>. <span class="math-inline">P(X>4) = e^{−0.5×4} = e^{−2} ≈ 0.1353</span>.</li>
+                        <li><strong>(c) Normal(100,15):</strong> <span class="math-inline">z = (115−100)/15 = 1</span>. <span class="math-inline">P(X<115) = P(Z<1) ≈ 0.8413</span>. 95% range: <span class="math-inline">μ ± 2σ = 100 ± 30 → (70, 130)</span>.</li>
+                        <li><strong>Answer:</strong> (a) 0.5, 5, 5. (b) 2, 2, 0.1353. (c) 0.8413, (70,130).</li>
+                    </ul>
+                </div>
+
+                <div class="extra-box">
+                    <h4>🔗 Connection: Exponential ↔ Poisson</h4>
+                    <ul>
+                        <li><strong>Poisson process:</strong> Events occur randomly in continuous time at a constant average rate <span class="math-inline">λ</span>.</li>
+                        <li><strong>Poisson distribution</strong> counts the <em>number</em> of events in a fixed interval: <span class="math-inline">N(t) ~ Poisson(λt)</span>.</li>
+                        <li><strong>Exponential distribution</strong> models the <em>waiting time</em> between consecutive events: if events follow a Poisson process with rate <span class="math-inline">λ</span>, the time between events is <span class="math-inline">Exp(λ)</span>.</li>
+                        <li><strong>Key relationship:</strong> <span class="math-inline">P(T > t) = e^{−λt}</span> = probability of <em>zero</em> events in time <span class="math-inline">t</span> = <span class="math-inline">P(N(t) = 0)</span>.</li>
+                        <li><strong>Summary:</strong> Poisson = counting; Exponential = timing. They are two views of the same underlying process.</li>
+                    </ul>
+                </div>
+
+                <div class="extra-box">
+                    <h4>⛓️ Application: Blockchain & Hashing</h4>
+                    <ul>
+                        <li><strong>Poisson in blockchain:</strong> Blocks are mined at roughly constant rate (e.g., Bitcoin ~1 block/10 min). The number of blocks mined in time <span class="math-inline">t</span> follows <span class="math-inline">Poisson(λt)</span>.</li>
+                        <li><strong>Exponential in blockchain:</strong> The time until the next block is found follows <span class="math-inline">Exp(λ)</span>. E.g., with <span class="math-inline">λ = 1/600</span> seconds, the expected wait is 600 s = 10 min.</li>
+                        <li><strong>Hashing and proof-of-work:</strong> A hash function maps any input to a fixed-size output. Miners repeatedly try random nonces until the hash falls below a target (e.g., starts with many zeros).</li>
+                        <li>Each hash attempt is an independent Bernoulli trial with success probability <span class="math-inline">p</span> (e.g., <span class="math-inline">p = 2^{−32}</span> for a difficulty target).</li>
+                        <li>The number of attempts until success follows a <strong>Geometric distribution</strong> with mean <span class="math-inline">1/p</span>.</li>
+                        <li><strong>Probability of finding a block in <span class="math-inline">n</span> attempts:</strong> <span class="math-inline">1 − (1−p)^n</span>.</li>
+                        <li><strong>Connection:</strong> Geometric → Exponential (in the limit of small <span class="math-inline">p</span> and large <span class="math-inline">n</span>), and Poisson counts rare events in time — tying hashing, mining, and the Poisson process together.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 07 Joint Distributions -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">07</span>
+                <span class="topic-title">Joint Distributions of Two Discrete RVs</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> The joint PMF <span class="math-inline">p(x,y)</span> gives probabilities for pairs. Marginal PMFs come from summing over the other variable. Covariance measures linear dependence.</div>
+
+                <div class="extra-box">
+                    <h4>📐 Correlation Coefficient (ρ or r)</h4>
+                    <ul>
+                        <li><strong>Correlation:</strong> <span class="math-inline">ρ = Cov(X,Y) / (σₓ · σᵧ)</span> for populations; <span class="math-inline">r</span> for samples.</li>
+                        <li><strong>Range:</strong> <span class="math-inline">−1 ≤ ρ ≤ 1</span>.</li>
+                        <li><strong>Interpretation:</strong> <span class="math-inline">ρ = 1</span> → perfect positive linear; <span class="math-inline">ρ = −1</span> → perfect negative linear; <span class="math-inline">ρ = 0</span> → no linear relationship.</li>
+                        <li>Correlation only measures <em>linear</em> association. <span class="math-inline">ρ = 0</span> does not mean independence (unless jointly normal).</li>
+                        <li><strong>Note on notation:</strong> <span class="math-inline">σₓ</span> = population standard deviation of <span class="math-inline">X</span>; <span class="math-inline">σᵧ</span> = population standard deviation of <span class="math-inline">Y</span>.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> Joint PMF: <span class="math-inline">p(0,0)=0.1</span>, <span class="math-inline">p(0,1)=0.2</span>, <span class="math-inline">p(1,0)=0.3</span>, <span class="math-inline">p(1,1)=0.4</span>. Find <span class="math-inline">P(X=1)</span>, <span class="math-inline">P(Y=0|X=1)</span>, <span class="math-inline">Cov(X,Y)</span>, and correlation <span class="math-inline">ρ</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong><span class="math-inline">P(X=1)</span>:</strong> <span class="math-inline">0.3+0.4=0.7</span>.</li>
+                        <li><strong><span class="math-inline">P(Y=0|X=1)</span>:</strong> <span class="math-inline">0.3/0.7 ≈ 0.4286</span>.</li>
+                        <li><strong>Marginals:</strong> <span class="math-inline">P(X=0)=0.3</span>, <span class="math-inline">P(X=1)=0.7</span>. <span class="math-inline">P(Y=0)=0.4</span>, <span class="math-inline">P(Y=1)=0.6</span>.</li>
+                        <li><strong><span class="math-inline">E(X)=0.7, E(Y)=0.6, E(XY)=0.4</span>.</strong></li>
+                        <li><strong><span class="math-inline">Cov(X,Y)</span>:</strong> <span class="math-inline">0.4 − 0.7×0.6 = −0.02</span>.</li>
+                        <li><strong><span class="math-inline">Var(X)</span>:</strong> <span class="math-inline">E(X²)=0.7, Var=0.7−0.49=0.21</span>. So <span class="math-inline">σₓ = √0.21 ≈ 0.4583</span>.</li>
+                        <li><strong><span class="math-inline">Var(Y)</span>:</strong> <span class="math-inline">E(Y²)=0.6, Var=0.6−0.36=0.24</span>. So <span class="math-inline">σᵧ = √0.24 ≈ 0.4899</span>.</li>
+                        <li><strong>Correlation <span class="math-inline">ρ</span>:</strong> <span class="math-inline">−0.02 / (0.4583 × 0.4899) = −0.02 / 0.2245 ≈ −0.089</span>.</li>
+                        <li><strong>Answer:</strong> <span class="math-inline">P(X=1)=0.7</span>, <span class="math-inline">P(Y=0|X=1)≈0.4286</span>, <span class="math-inline">Cov=−0.02</span>, <span class="math-inline">ρ≈−0.089</span> (weak negative linear relationship).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART III: DESCRIPTIVE STATISTICS                                -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 08 Descriptive Statistics -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">08</span>
+                <span class="topic-title">Descriptive Statistics</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Summary measures: mean, median, variance, standard deviation, quartiles. They describe center, spread, and shape of data.</div>
+
+                <div class="extra-box">
+                    <h4>📊 Percentiles, Plots & R (ggplot2)</h4>
+                    <ul>
+                        <li><strong>Percentile:</strong> The <span class="math-inline">p</span>-th percentile is the value below which <span class="math-inline">p%</span> of data fall. Median = 50th percentile. Q1 = 25th, Q3 = 75th. IQR = Q3 − Q1.</li>
+                        <li><strong>Histogram:</strong> Displays distribution of a quantitative variable by binning values. Shows shape, center, spread, outliers.</li>
+                        <li><strong>Boxplot:</strong> Shows median, Q1, Q3, IQR, and outliers (1.5×IQR rule). Useful for comparing groups.</li>
+                        <li><strong>Barplot:</strong> Displays counts/frequencies for categorical variables.</li>
+                        <li><strong>Piechart:</strong> Shows proportions of a whole for categorical data (use with caution).</li>
+                        <li><strong>Scatterplot:</strong> Displays relationship between two quantitative variables. Look for direction, form, strength, outliers.</li>
+                    </ul>
+                    <p style="margin: 12px 0 6px 0; font-weight: 600; color: #0a3b52;">📦 R code using ggplot2:</p>
+                    <div class="r-code"><span class="comment"># Load library</span>
+<span class="func">library</span>(ggplot2)
+
+<span class="comment"># Histogram</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = variable)) +
+  <span class="func">geom_histogram</span>(binwidth = 5, fill = <span class="string">"steelblue"</span>, color = <span class="string">"white"</span>)
+
+<span class="comment"># Boxplot</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = group, y = value)) +
+  <span class="func">geom_boxplot</span>(fill = <span class="string">"lightblue"</span>)
+
+<span class="comment"># Barplot</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = category)) +
+  <span class="func">geom_bar</span>(fill = <span class="string">"coral"</span>)
+
+<span class="comment"># Piechart</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = <span class="string">""</span>, y = count, fill = category)) +
+  <span class="func">geom_bar</span>(stat = <span class="string">"identity"</span>) +
+  <span class="func">coord_polar</span>(<span class="string">"y"</span>)
+
+<span class="comment"># Scatterplot</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = x_var, y = y_var)) +
+  <span class="func">geom_point</span>() +
+  <span class="func">geom_smooth</span>(method = <span class="string">"lm"</span>, se = <span class="keyword">FALSE</span>)</div>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A sample of 7 test scores: 12, 15, 18, 20, 22, 25, 30. Compute the mean, median, sample variance, sample standard deviation, Q1, Q3, IQR, and identify the 75th percentile.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>Mean:</strong> <span class="math-inline">(12+15+18+20+22+25+30)/7 = 142/7 ≈ 20.2857</span>.</li>
+                        <li><strong>Median:</strong> Ordered data, middle (4th) value = 20.</li>
+                        <li><strong>Deviations from mean:</strong> <span class="math-inline">−8.2857, −5.2857, −2.2857, −0.2857, 1.7143, 4.7143, 9.7143</span>.</li>
+                        <li><strong>Sum of squared deviations:</strong> ≈ <span class="math-inline">221.4286</span>.</li>
+                        <li><strong>Sample variance:</strong> <span class="math-inline">s² = 221.4286 / 6 ≈ 36.9048</span>.</li>
+                        <li><strong>Sample standard deviation:</strong> <span class="math-inline">s = √36.9048 ≈ 6.0749</span>.</li>
+                        <li><strong>Q1 (25th percentile):</strong> Position = <span class="math-inline">0.25×(7+1) = 2</span> → Q1 = 15.</li>
+                        <li><strong>Q3 (75th percentile):</strong> Position = <span class="math-inline">0.75×(7+1) = 6</span> → Q3 = 25.</li>
+                        <li><strong>IQR:</strong> <span class="math-inline">25 − 15 = 10</span>.</li>
+                        <li><strong>Answer:</strong> Mean≈20.29, median=20, s²≈36.90, s≈6.07, Q1=15, Q3=25, IQR=10, 75th percentile=25.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART IV: CONFIDENCE INTERVALS (ESTIMATION)                      -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 09 Inference for a Population Proportion -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">09</span>
+                <span class="topic-title">Inference for a Population Proportion</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> For a population proportion <span class="math-inline">p</span>, the sample proportion <span class="math-inline">p̂ = X/n</span> is approximately normal for large <span class="math-inline">n</span>.</div>
+
+                <div class="extra-box">
+                    <h4>📐 General Structure of a Confidence Interval</h4>
+                    <p style="margin: 8px 0; font-weight: 500; color: #0c4a68;">All confidence intervals follow this form:</p>
+                    <div class="math-block">estimate ± (critical value) × (standard error)</div>
+                    <ul>
+                        <li><strong>Point estimate:</strong> Sample statistic (e.g., <span class="math-inline">p̂</span>, <span class="math-inline">x̄</span>, <span class="math-inline">p̂₁−p̂₂</span>).</li>
+                        <li><strong>Critical value:</strong> <span class="math-inline">z*</span> (normal) or <span class="math-inline">t*</span> (t-distribution) based on confidence level.</li>
+                        <li><strong>Standard error:</strong> Estimated standard deviation of the statistic.</li>
+                        <li><strong>For proportions:</strong> <span class="math-inline">SE = √(p̂(1−p̂)/n)</span>.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> In a survey of 400 voters, 220 support Candidate A. Construct a 95% confidence interval for the true proportion <span class="math-inline">p</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">p̂ = 220/400 = 0.55</span>.</li>
+                        <li>Check large-sample condition: <span class="math-inline">n p̂ = 220 ≥ 10</span>, <span class="math-inline">n(1−p̂) = 180 ≥ 10</span>. ✅</li>
+                        <li>Standard error: <span class="math-inline">SE = √(0.55×0.45/400) = √0.00061875 ≈ 0.02487</span>.</li>
+                        <li><span class="math-inline">z*</span> for 95% CI = 1.96.</li>
+                        <li>Margin of error: <span class="math-inline">1.96 × 0.02487 ≈ 0.04875</span>.</li>
+                        <li>CI: <span class="math-inline">0.55 ± 0.0488 → (0.5012, 0.5988)</span>.</li>
+                        <li><strong>Answer:</strong> 95% CI for <span class="math-inline">p</span> is approximately (0.501, 0.599).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 10 Inference for the Difference of Two Proportions -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">10</span>
+                <span class="topic-title">Inference for the Difference of Two Proportions</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Compare <span class="math-inline">p₁ − p₂</span> using <span class="math-inline">p̂₁ − p̂₂</span>. Standard error: <span class="math-inline">√[p̂₁(1−p̂₁)/n₁ + p̂₂(1−p̂₂)/n₂]</span>. CI uses <span class="math-inline">z*</span>.</div>
+                <div class="exercise"><span class="question">📌 Exercise</span> Group 1: 60 successes in 200 trials. Group 2: 40 successes in 180 trials. Find a 90% confidence interval for <span class="math-inline">p₁ − p₂</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">p̂₁ = 60/200 = 0.30</span>, <span class="math-inline">p̂₂ = 40/180 ≈ 0.2222</span>.</li>
+                        <li>Difference: <span class="math-inline">p̂₁ − p̂₂ = 0.30 − 0.2222 = 0.0778</span>.</li>
+                        <li>SE = <span class="math-inline">√[0.30×0.70/200 + 0.2222×0.7778/180] = √[0.00105 + 0.00096] = √0.00201 ≈ 0.04483</span>.</li>
+                        <li><span class="math-inline">z*</span> for 90% CI = 1.645.</li>
+                        <li>Margin of error: <span class="math-inline">1.645 × 0.04483 ≈ 0.0737</span>.</li>
+                        <li>CI: <span class="math-inline">0.0778 ± 0.0737 → (0.0041, 0.1515)</span>.</li>
+                        <li><strong>Answer:</strong> 90% CI for <span class="math-inline">p₁ − p₂</span> is approximately (0.004, 0.152).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 11 Inference for a Population Mean -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">11</span>
+                <span class="topic-title">Inference for a Population Mean</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> When <span class="math-inline">σ</span> is unknown, use t-distribution: <span class="math-inline">x̄ ± t*·(s/√n)</span>. Degrees of freedom = <span class="math-inline">n−1</span>.</div>
+
+                <div class="extra-box">
+                    <h4>⚠️ Assumptions for Inference on a Mean</h4>
+                    <ul>
+                        <li><strong>Independence:</strong> Observations must be independent (random sampling or random assignment).</li>
+                        <li><strong>Normality:</strong> The population should be approximately normal, OR the sample size should be large (<span class="math-inline">n ≥ 30</span>) so the Central Limit Theorem applies.</li>
+                        <li><strong>For small samples (<span class="math-inline">n < 30</span>):</strong> Check for normality using a histogram, Q-Q plot, or boxplot. If severely skewed with outliers, consider non-parametric methods.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A sample of 16 measurements has mean 42.5 and standard deviation 5.2. Construct a 99% confidence interval for the population mean. State the assumptions.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">n = 16, df = 15</span>. <span class="math-inline">x̄ = 42.5, s = 5.2</span>.</li>
+                        <li>Standard error: <span class="math-inline">SE = s/√n = 5.2/4 = 1.3</span>.</li>
+                        <li><span class="math-inline">t*</span> for 99% CI with df=15: <span class="math-inline">t₀.₉₉₅,₁₅ ≈ 2.947</span>.</li>
+                        <li>Margin of error: <span class="math-inline">2.947 × 1.3 ≈ 3.831</span>.</li>
+                        <li>CI: <span class="math-inline">42.5 ± 3.831 → (38.669, 46.331)</span>.</li>
+                        <li><strong>Assumptions:</strong> (1) Data are independent (random sample). (2) Population is approximately normal. With <span class="math-inline">n=16 (<30)</span>, normality should be checked (e.g., histogram or Q-Q plot).</li>
+                        <li><strong>Answer:</strong> 99% CI for <span class="math-inline">μ</span> is approximately (38.67, 46.33).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 12 Inference for the Difference of Two Means -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">12</span>
+                <span class="topic-title">Inference for the Difference of Two Means</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Two-sample t-interval for <span class="math-inline">μ₁ − μ₂</span>: <span class="math-inline">(x̄₁ − x̄₂) ± t*·√(s₁²/n₁ + s₂²/n₂)</span>. Use conservative df or Welch's approximation.</div>
+
+                <div class="extra-box">
+                    <h4>⚠️ Assumptions & Paired Sample Case</h4>
+                    <ul>
+                        <li><strong>Independence:</strong> The two samples must be independent of each other (unless paired).</li>
+                        <li><strong>Normality:</strong> Both populations should be approximately normal, or sample sizes large (<span class="math-inline">n₁, n₂ ≥ 30</span>).</li>
+                        <li><strong>Paired sample case:</strong> When observations are naturally paired (e.g., before/after, twins, matched pairs), analyze the differences <span class="math-inline">dᵢ = x₁ᵢ − x₂ᵢ</span>.
+                            <br>Use one-sample t-interval on <span class="math-inline">d</span>: <span class="math-inline">d̄ ± t*·(s_d/√n)</span>, df = <span class="math-inline">n−1</span>.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> (a) Group 1: <span class="math-inline">n₁=12, x̄₁=85, s₁=6</span>. Group 2: <span class="math-inline">n₂=15, x̄₂=79, s₂=7</span>. Find a 95% CI for <span class="math-inline">μ₁ − μ₂</span> (df=24). (b) Paired data: <span class="math-inline">n=10</span> pairs, mean difference <span class="math-inline">d̄=3.2</span>, <span class="math-inline">s_d=2.1</span>. Find a 95% CI for <span class="math-inline">μ_d</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) Two independent samples:</strong> Difference = <span class="math-inline">85 − 79 = 6</span>.</li>
+                        <li>SE = <span class="math-inline">√(36/12 + 49/15) = √(3 + 3.2667) = √6.2667 ≈ 2.5033</span>.</li>
+                        <li><span class="math-inline">t*</span> for 95% CI with df=24: <span class="math-inline">t₀.₉₇₅,₂₄ ≈ 2.064</span>.</li>
+                        <li>Margin of error: <span class="math-inline">2.064 × 2.5033 ≈ 5.167</span>.</li>
+                        <li>CI: <span class="math-inline">6 ± 5.167 → (0.833, 11.167)</span>.</li>
+                        <li><strong>(b) Paired sample:</strong> <span class="math-inline">d̄ = 3.2, s_d = 2.1, n = 10, df = 9</span>.</li>
+                        <li>SE = <span class="math-inline">s_d/√n = 2.1/√10 ≈ 0.6641</span>.</li>
+                        <li><span class="math-inline">t*</span> for 95% CI with df=9: <span class="math-inline">t₀.₉₇₅,₉ ≈ 2.262</span>.</li>
+                        <li>Margin of error: <span class="math-inline">2.262 × 0.6641 ≈ 1.502</span>.</li>
+                        <li>CI: <span class="math-inline">3.2 ± 1.502 → (1.698, 4.702)</span>.</li>
+                        <li><strong>Answer:</strong> (a) 95% CI for <span class="math-inline">μ₁−μ₂</span> is (0.83, 11.17). (b) 95% CI for <span class="math-inline">μ_d</span> is (1.70, 4.70).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART V: HYPOTHESIS TESTING                                      -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 13 General Test Statistic (NEW) -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">13</span>
+                <span class="topic-title">The General Test Statistic: (statistic − null value) / SE</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Almost every hypothesis test for a mean or proportion uses the same core formula. Standardizing the difference between the observed statistic and the null value by the standard error tells us how many standard errors away the data are from the null hypothesis.</div>
+
+                <div class="highlight-box">
+                    <h4>🎯 The General Test Statistic</h4>
+                    <div class="math-block">test statistic = (sample statistic − null value) / standard error</div>
+                    <p style="margin: 8px 0 0 0; color: #2a6b2a; font-weight: 500;">
+                        This single formula works for one-sample and two-sample tests of means and proportions.
+                    </p>
+                </div>
+
+                <div class="extra-box">
+                    <h4>📐 How the Formula Specializes</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Statistic</th>
+                                <th>Null Value</th>
+                                <th>Standard Error</th>
+                                <th>Test Stat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1-sample mean (t)</td>
+                                <td><span class="math-inline">x̄</span></td>
+                                <td><span class="math-inline">μ₀</span></td>
+                                <td><span class="math-inline">s/√n</span></td>
+                                <td><span class="math-inline">t = (x̄ − μ₀)/(s/√n)</span></td>
+                            </tr>
+                            <tr>
+                                <td>1-sample proportion (z)</td>
+                                <td><span class="math-inline">p̂</span></td>
+                                <td><span class="math-inline">p₀</span></td>
+                                <td><span class="math-inline">√(p₀(1−p₀)/n)</span></td>
+                                <td><span class="math-inline">z = (p̂ − p₀)/SE</span></td>
+                            </tr>
+                            <tr>
+                                <td>2-sample mean (t)</td>
+                                <td><span class="math-inline">x̄₁ − x̄₂</span></td>
+                                <td><span class="math-inline">0</span></td>
+                                <td><span class="math-inline">√(s₁²/n₁ + s₂²/n₂)</span></td>
+                                <td><span class="math-inline">t = (x̄₁ − x̄₂)/SE</span></td>
+                            </tr>
+                            <tr>
+                                <td>2-sample proportion (z)</td>
+                                <td><span class="math-inline">p̂₁ − p̂₂</span></td>
+                                <td><span class="math-inline">0</span></td>
+                                <td><span class="math-inline">√(p̂(1−p̂)(1/n₁ + 1/n₂))</span></td>
+                                <td><span class="math-inline">z = (p̂₁ − p̂₂)/SE</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="extra-box">
+                    <h4>🧭 Interpretation</h4>
+                    <ul>
+                        <li>The test statistic measures <strong>how many standard errors</strong> the observed statistic lies from the null value.</li>
+                        <li>Large positive or negative values → the data are far from what <span class="math-inline">H₀</span> predicts → small p-value → reject <span class="math-inline">H₀</span>.</li>
+                        <li>Values close to 0 → the data are consistent with <span class="math-inline">H₀</span> → large p-value → fail to reject <span class="math-inline">H₀</span>.</li>
+                        <li>For a two-sided test, p-value = <span class="math-inline">2 × P(Z > |z|)</span> or <span class="math-inline">2 × P(T > |t|)</span>.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A sample of 49 batteries has mean lifetime 98 hours. The company claims the mean is 100 hours. The sample standard deviation is 7 hours. Compute the test statistic for <span class="math-inline">H₀: μ = 100</span> vs. <span class="math-inline">Hₐ: μ ≠ 100</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li>Identify the pieces: statistic = <span class="math-inline">x̄ = 98</span>; null value = <span class="math-inline">μ₀ = 100</span>; SE = <span class="math-inline">s/√n = 7/√49 = 7/7 = 1</span>.</li>
+                        <li>Apply the general formula: <span class="math-inline">t = (98 − 100) / 1 = −2.0</span>.</li>
+                        <li>df = 48. p-value = <span class="math-inline">2 × P(T > 2.0) ≈ 2 × 0.0255 ≈ 0.051</span>.</li>
+                        <li>Since <span class="math-inline">0.051 > 0.05</span>, fail to reject <span class="math-inline">H₀</span> at <span class="math-inline">α = 0.05</span> (borderline).</li>
+                        <li><strong>Answer:</strong> <span class="math-inline">t = −2.0</span>, p ≈ 0.051, fail to reject <span class="math-inline">H₀</span>.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 14 Hypothesis Testing: One Sample -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">14</span>
+                <span class="topic-title">Hypothesis Testing: One Sample (p‑value approach)</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Hypothesis testing decides between a null hypothesis <span class="math-inline">H₀</span> and an alternative <span class="math-inline">Hₐ</span> using sample data. The <strong>p‑value</strong> is the probability, assuming <span class="math-inline">H₀</span> is true, of getting a test statistic at least as extreme as observed. If p‑value <span class="math-inline">≤ α</span>, reject <span class="math-inline">H₀</span>.</div>
+
+                <div class="extra-box">
+                    <h4>📐 Steps in a Hypothesis Test (p‑value approach)</h4>
+                    <ol style="margin: 6px 0; padding-left: 22px; color: #1b3f52; line-height: 1.6;">
+                        <li>State <span class="math-inline">H₀</span> and <span class="math-inline">Hₐ</span>.</li>
+                        <li>Choose significance level <span class="math-inline">α</span> (e.g., 0.05).</li>
+                        <li>Compute the test statistic using <span class="math-inline">(statistic − null value) / SE</span>.</li>
+                        <li>Find the p‑value (area in the tail(s)).</li>
+                        <li>Compare p‑value to <span class="math-inline">α</span> and conclude in context.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise (One-sample t-test for a mean)</span> A coffee shop claims its large latte has 200 mg of caffeine on average. A random sample of 25 lattes has mean 192 mg and standard deviation 12 mg. Test at <span class="math-inline">α = 0.05</span> whether the true mean differs from 200 mg.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">H₀: μ = 200</span> vs. <span class="math-inline">Hₐ: μ ≠ 200</span> (two-tailed).</li>
+                        <li>Test statistic: <span class="math-inline">t = (x̄ − μ₀) / (s/√n) = (192 − 200) / (12/√25) = −8 / 2.4 = −3.333</span>.</li>
+                        <li>df = 24. Find p‑value: <span class="math-inline">P(|T| > 3.333) ≈ 0.0027</span>.</li>
+                        <li>Since <span class="math-inline">0.0027 < 0.05</span>, reject <span class="math-inline">H₀</span>.</li>
+                        <li><strong>Conclusion:</strong> There is strong evidence the mean caffeine content differs from 200 mg.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise (One-sample z-test for a proportion)</span> A poll claims 50% of residents support a new policy. In a sample of 400 residents, 184 support it. Test at <span class="math-inline">α = 0.05</span> whether support differs from 50%.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">H₀: p = 0.50</span> vs. <span class="math-inline">Hₐ: p ≠ 0.50</span>.</li>
+                        <li><span class="math-inline">p̂ = 184/400 = 0.46</span>.</li>
+                        <li>Test statistic: <span class="math-inline">z = (p̂ − p₀) / √(p₀(1−p₀)/n) = (0.46 − 0.50) / √(0.50×0.50/400) = −0.04 / 0.025 = −1.60</span>.</li>
+                        <li>p‑value: <span class="math-inline">2 × P(Z < −1.60) = 2 × 0.0548 = 0.1096</span>.</li>
+                        <li>Since <span class="math-inline">0.1096 > 0.05</span>, fail to reject <span class="math-inline">H₀</span>.</li>
+                        <li><strong>Conclusion:</strong> Not enough evidence to say support differs from 50%.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 15 Hypothesis Testing: Two Sample -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">15</span>
+                <span class="topic-title">Hypothesis Testing: Two Sample (p‑value approach)</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Two-sample tests compare two populations. For means, use the two-sample t-test; for proportions, use the two-sample z-test. The same general formula applies: <span class="math-inline">(statistic − null value) / SE</span>, where the null value is typically 0 (no difference).</div>
+
+                <div class="exercise"><span class="question">📌 Exercise (Two-sample t-test for means)</span> Method A: <span class="math-inline">n₁=12, x̄₁=85, s₁=6</span>. Method B: <span class="math-inline">n₂=15, x̄₂=79, s₂=7</span>. Test at <span class="math-inline">α = 0.05</span> whether the means differ (use df = 24).</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">H₀: μ₁ − μ₂ = 0</span> vs. <span class="math-inline">Hₐ: μ₁ − μ₂ ≠ 0</span>.</li>
+                        <li>Statistic: <span class="math-inline">x̄₁ − x̄₂ = 6</span>. Null value = 0.</li>
+                        <li>SE = <span class="math-inline">√(s₁²/n₁ + s₂²/n₂) = √(36/12 + 49/15) = √(3 + 3.2667) = √6.2667 ≈ 2.5033</span>.</li>
+                        <li>Test statistic: <span class="math-inline">t = (6 − 0) / 2.5033 ≈ 2.397</span>.</li>
+                        <li>df = 24. p‑value: <span class="math-inline">2 × P(T > 2.397) ≈ 2 × 0.0123 = 0.0246</span>.</li>
+                        <li>Since <span class="math-inline">0.0246 < 0.05</span>, reject <span class="math-inline">H₀</span>.</li>
+                        <li><strong>Conclusion:</strong> There is evidence that the two methods produce different mean results.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise (Two-sample z-test for proportions)</span> Group 1: 60 successes in 200 trials. Group 2: 40 successes in 180 trials. Test at <span class="math-inline">α = 0.05</span> whether the proportions differ.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">H₀: p₁ − p₂ = 0</span> vs. <span class="math-inline">Hₐ: p₁ − p₂ ≠ 0</span>.</li>
+                        <li><span class="math-inline">p̂₁ = 0.30</span>, <span class="math-inline">p̂₂ ≈ 0.2222</span>. Statistic = <span class="math-inline">0.0778</span>. Null value = 0.</li>
+                        <li>Pooled proportion: <span class="math-inline">p̂ = (60+40)/(200+180) = 100/380 ≈ 0.2632</span>.</li>
+                        <li>SE = <span class="math-inline">√[p̂(1−p̂)(1/n₁ + 1/n₂)] = √[0.2632×0.7368×(1/200 + 1/180)] ≈ √[0.1939×0.01056] ≈ √0.002048 ≈ 0.0453</span>.</li>
+                        <li>Test statistic: <span class="math-inline">z = (0.0778 − 0) / 0.0453 ≈ 1.718</span>.</li>
+                        <li>p‑value: <span class="math-inline">2 × P(Z > 1.718) ≈ 2 × 0.0429 = 0.0858</span>.</li>
+                        <li>Since <span class="math-inline">0.0858 > 0.05</span>, fail to reject <span class="math-inline">H₀</span>.</li>
+                        <li><strong>Conclusion:</strong> Not enough evidence to say the proportions differ.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 16 Connection: Hypothesis Tests ↔ Confidence Intervals -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">16</span>
+                <span class="topic-title">Connection: Hypothesis Tests ↔ Confidence Intervals</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> A two-sided hypothesis test at significance level <span class="math-inline">α</span> is equivalent to checking whether the null value falls inside a <span class="math-inline">(1−α)×100%</span> confidence interval. Both use the same general formula <span class="math-inline">(statistic − null value) / SE</span> — just rearranged.</div>
+
+                <div class="extra-box">
+                    <h4>🔗 The Duality</h4>
+                    <ul>
+                        <li><strong>Decision rule:</strong> Reject <span class="math-inline">H₀: μ = μ₀</span> at level <span class="math-inline">α</span> if and only if <span class="math-inline">μ₀</span> is <em>not</em> in the <span class="math-inline">(1−α)</span> confidence interval for <span class="math-inline">μ</span>.</li>
+                        <li><strong>Why they match:</strong> The CI contains all null values <span class="math-inline">μ₀</span> for which <span class="math-inline">|(x̄ − μ₀)/SE| ≤ critical value</span>. This is exactly the "fail to reject" region of the test.</li>
+                        <li><strong>Example:</strong> A 95% CI for <span class="math-inline">μ</span> that excludes 200 is equivalent to rejecting <span class="math-inline">H₀: μ = 200</span> at <span class="math-inline">α = 0.05</span>.</li>
+                        <li>The CI gives more information: it shows the range of plausible values, while the test only answers yes/no about a single value.</li>
+                        <li><strong>One-sided tests</strong> correspond to one-sided confidence bounds (e.g., lower or upper confidence limits).</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> In the coffee example (Topic 14), the 95% CI for <span class="math-inline">μ</span> was (187.05, 196.95). Does this agree with the hypothesis test result?</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li>The test rejected <span class="math-inline">H₀: μ = 200</span> at <span class="math-inline">α = 0.05</span>.</li>
+                        <li>The 95% CI is <span class="math-inline">192 ± 2.064 × (12/√25) = 192 ± 4.954 → (187.05, 196.95)</span>.</li>
+                        <li>Since 200 is <em>not</em> in the interval, we reject <span class="math-inline">H₀</span> — exactly matching the test conclusion.</li>
+                        <li><strong>Answer:</strong> Yes, the CI and the test agree perfectly.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART VI: MORE INFERENCE METHODS                                 -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 17 Chi-Square Tests -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">17</span>
+                <span class="topic-title">Chi-Square Tests: Goodness-of-Fit & Independence</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Chi-square goodness-of-fit tests if observed frequencies match expected. Independence tests if two categorical variables are associated in a contingency table. Statistic: <span class="math-inline">χ² = Σ (O−E)²/E</span>.</div>
+
+                <div class="extra-box">
+                    <h4>🔍 Testing Independence vs. Homogeneity</h4>
+                    <ul>
+                        <li><strong>Test of Independence:</strong> One sample, two categorical variables. <span class="math-inline">H₀</span>: The two variables are independent.
+                            <br>Example: Is gender independent of political affiliation?</li>
+                        <li><strong>Test of Homogeneity:</strong> Multiple populations (groups), one categorical variable. <span class="math-inline">H₀</span>: The distribution of the variable is the same across all groups.
+                            <br>Example: Is the proportion of defective items the same across three factories?</li>
+                        <li><strong>Note:</strong> The mechanics (<span class="math-inline">χ²</span> statistic, df = <span class="math-inline">(r−1)(c−1)</span>) are identical. Only the sampling design and interpretation differ.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> (a) A die is rolled 120 times. Observed: 1:15, 2:20, 3:25, 4:18, 5:22, 6:20. Test fairness at <span class="math-inline">α=0.05</span>. (b) In a study of 200 people, test if gender (Male/Female) is independent of smoking status (Smoker/Non-smoker). Observed: Male Smoker=30, Male Non=70, Female Smoker=20, Female Non=80. Test at <span class="math-inline">α=0.05</span>.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) Goodness-of-fit:</strong> Expected = 20 each. <span class="math-inline">χ² = (15−20)²/20 + 0 + (25−20)²/20 + (18−20)²/20 + (22−20)²/20 + 0 = 1.25+1.25+0.2+0.2 = 2.90</span>. df=5. Critical <span class="math-inline">χ²₀.₀₅,₅ = 11.07</span>. <span class="math-inline">2.90 < 11.07</span> → fail to reject. Die is fair.</li>
+                        <li><strong>(b) Independence:</strong> Table:
+                            <br>Male: Smoker=30, Non=70, Total=100.
+                            <br>Female: Smoker=20, Non=80, Total=100.
+                            <br>Grand total=200. Overall smoker proportion = <span class="math-inline">50/200 = 0.25</span>.</li>
+                        <li>Expected: Male Smoker = <span class="math-inline">100×0.25 = 25</span>; Male Non = 75; Female Smoker = 25; Female Non = 75.</li>
+                        <li><span class="math-inline">χ² = (30−25)²/25 + (70−75)²/75 + (20−25)²/25 + (80−75)²/75 = 1 + 0.333 + 1 + 0.333 = 2.667</span>.</li>
+                        <li>df = <span class="math-inline">(2−1)(2−1) = 1</span>. Critical <span class="math-inline">χ²₀.₀₅,₁ = 3.841</span>. <span class="math-inline">2.667 < 3.841</span> → fail to reject.</li>
+                        <li><strong>Answer:</strong> (a) Die is fair (<span class="math-inline">χ²=2.90, p>0.05</span>). (b) No significant association between gender and smoking (<span class="math-inline">χ²=2.67, p>0.05</span>).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 18 One-Way ANOVA -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">18</span>
+                <span class="topic-title">One-Way ANOVA</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> ANOVA tests equality of means across <span class="math-inline">k</span> groups. <span class="math-inline">F = MS_between / MS_within</span>. If <span class="math-inline">F</span> is large, reject <span class="math-inline">H₀: μ₁=…=μₖ</span>.</div>
+
+                <div class="extra-box">
+                    <h4>⚠️ Assumptions for One-Way ANOVA</h4>
+                    <ul>
+                        <li><strong>Independence:</strong> Observations within and across groups are independent.</li>
+                        <li><strong>Normality:</strong> Each group's data are approximately normally distributed.</li>
+                        <li><strong>Equal variances (homoscedasticity):</strong> The population variance is the same across all groups. Check with Levene's test or residual plots.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> Three groups, each <span class="math-inline">n=5</span>. Group means: 10, 12, 14. Grand mean = 12. <span class="math-inline">SS_between = 40</span>. <span class="math-inline">SS_within = 120</span>. Test at <span class="math-inline">α=0.05</span>. State the assumptions.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">k=3</span> groups, <span class="math-inline">N=15</span> total. <span class="math-inline">df_between = k−1 = 2</span>, <span class="math-inline">df_within = N−k = 12</span>.</li>
+                        <li><span class="math-inline">MS_between = 40/2 = 20</span>. <span class="math-inline">MS_within = 120/12 = 10</span>.</li>
+                        <li><span class="math-inline">F = 20/10 = 2.0</span>.</li>
+                        <li>Critical <span class="math-inline">F₀.₀₅,₂,₁₂ = 3.89</span>. Since <span class="math-inline">2.0 < 3.89</span>, fail to reject <span class="math-inline">H₀</span>.</li>
+                        <li><strong>Assumptions:</strong> (1) Independent samples. (2) Each group approximately normal. (3) Equal variances across groups.</li>
+                        <li><strong>Answer:</strong> No significant difference among group means at <span class="math-inline">α=0.05</span> (<span class="math-inline">F=2.0, p>0.05</span>).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PART VII: REGRESSION & MODELING                                 -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+
+        <!-- 19 Simple & Multiple Regression -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">19</span>
+                <span class="topic-title">Simple & Multiple Regression</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Simple linear regression fits <span class="math-inline">ŷ = b₀ + b₁x</span>. Multiple regression extends to <span class="math-inline">ŷ = b₀ + b₁x₁ + … + bₖxₖ</span>. <span class="math-inline">R²</span> measures proportion of variance explained.</div>
+
+                <div class="extra-box">
+                    <h4>📈 Interpretation of Coefficients & R-squared</h4>
+                    <ul>
+                        <li><strong>Intercept (<span class="math-inline">b₀</span>):</strong> Predicted value of <span class="math-inline">y</span> when all predictors are 0. Often not practically meaningful if 0 is outside data range.</li>
+                        <li><strong>Slope (<span class="math-inline">b₁</span>):</strong> For a one-unit increase in <span class="math-inline">x</span>, <span class="math-inline">y</span> changes by <span class="math-inline">b₁</span> units on average, holding other variables constant.</li>
+                        <li><strong>Multiple regression coefficients (<span class="math-inline">bⱼ</span>):</strong> The change in <span class="math-inline">y</span> for a one-unit increase in <span class="math-inline">xⱼ</span>, holding all other predictors fixed.</li>
+                        <li><strong><span class="math-inline">R²</span> (coefficient of determination):</strong> Proportion of total variation in <span class="math-inline">y</span> explained by the model. Range: 0 to 1.
+                            <br>Example: <span class="math-inline">R² = 0.85</span> → 85% of the variability in <span class="math-inline">y</span> is explained by the predictors.</li>
+                        <li><strong>Adjusted <span class="math-inline">R²</span>:</strong> Penalizes for adding unnecessary predictors. Use when comparing models with different numbers of predictors.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> For data <span class="math-inline">(x,y)</span>: <span class="math-inline">(1,2), (2,4), (3,5), (4,7), (5,8)</span>. Find the least-squares line <span class="math-inline">ŷ = b₀ + b₁x</span>, predict <span class="math-inline">y</span> when <span class="math-inline">x=6</span>, and interpret <span class="math-inline">b₁</span>. If <span class="math-inline">R²=0.98</span>, interpret it.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><span class="math-inline">n=5</span>. <span class="math-inline">Σx=15, Σy=26, Σx²=55, Σxy=88</span>. Mean <span class="math-inline">x̄=3, ȳ=5.2</span>.</li>
+                        <li>Slope <span class="math-inline">b₁ = (88 − 5·3·5.2) / (55 − 5·9) = (88−78)/(55−45) = 10/10 = 1</span>.</li>
+                        <li>Intercept <span class="math-inline">b₀ = 5.2 − 1×3 = 2.2</span>.</li>
+                        <li>Line: <span class="math-inline">ŷ = 2.2 + 1.0 x</span>. When <span class="math-inline">x=6: ŷ = 2.2 + 6 = 8.2</span>.</li>
+                        <li><strong>Interpretation of <span class="math-inline">b₁</span>:</strong> For each additional unit increase in <span class="math-inline">x</span>, <span class="math-inline">y</span> increases by 1.0 unit on average.</li>
+                        <li><strong><span class="math-inline">R² = 0.98</span>:</strong> 98% of the variation in <span class="math-inline">y</span> is explained by the linear relationship with <span class="math-inline">x</span>. The model fits very well.</li>
+                        <li><strong>Answer:</strong> <span class="math-inline">ŷ = 2.2 + 1.0x</span>; predicted <span class="math-inline">y</span> at <span class="math-inline">x=6</span> is 8.2; <span class="math-inline">b₁=1.0</span>; <span class="math-inline">R²=0.98</span> means excellent fit.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 20 Data Mining -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">20</span>
+                <span class="topic-title">Introduction to Data Mining</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Data mining extracts patterns from large datasets. A core task is <strong>predictive modeling</strong>, where we split data into training and test sets, fit a model on training data, and evaluate its predictive performance on unseen test data.</div>
+
+                <div class="extra-box">
+                    <h4>🔬 Regression in Data Mining: Training/Test Split & Performance Metrics</h4>
+                    <ul>
+                        <li><strong>Training/Test Split:</strong> Randomly divide data into:
+                            <ul>
+                                <li><strong>Training set</strong> (e.g., 70–80%): Used to fit
