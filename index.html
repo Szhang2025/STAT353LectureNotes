@@ -335,6 +335,35 @@
             font-weight: 600;
             color: #1d5c1d;
         }
+        /* New: warning box for errors */
+        .error-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.94rem;
+        }
+        .error-table th, .error-table td {
+            border: 1px solid #bdd8e8;
+            padding: 10px 12px;
+            text-align: center;
+        }
+        .error-table th {
+            background: #d9ecf7;
+            color: #0a3b52;
+            font-weight: 600;
+        }
+        .error-table .type1 {
+            background: #fff3e6;
+            color: #8a4b0a;
+        }
+        .error-table .type2 {
+            background: #fde8e8;
+            color: #8a1f1f;
+        }
+        .error-table .correct {
+            background: #e8f4e8;
+            color: #1e5c3a;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -390,7 +419,7 @@
 <body>
 <div class="container">
     <h1>📘 Problem‑Solving Introduction to Probability & Statistics</h1>
-    <div class="subhead">22 topics · logically ordered from probability foundations to statistical inference & applications</div>
+    <div class="subhead">23 topics · logically ordered from probability foundations to statistical inference & applications</div>
 
     <div class="dropdown-controls">
         <button type="button" onclick="expandAll()">⬇ Expand All</button>
@@ -901,10 +930,124 @@
         <!-- PART V: HYPOTHESIS TESTING                                      -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
 
-        <!-- 13 General Test Statistic (NEW) -->
+        <!-- 13 NEW: Foundations of Hypothesis Testing -->
         <details class="topic-card">
             <summary class="topic-header">
                 <span class="topic-number">13</span>
+                <span class="topic-title">Foundations of Hypothesis Testing: Null, Alternative & Errors</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> A <strong>hypothesis test</strong> is a formal procedure for deciding between two competing claims about a population parameter using sample data. It answers the question: <em>“Is the observed effect real, or could it have happened by chance?”</em></div>
+
+                <div class="extra-box">
+                    <h4>🎯 What is a Test of Hypothesis?</h4>
+                    <p style="margin: 6px 0; line-height: 1.7;">A hypothesis test compares what we observe in a sample (a <strong>statistic</strong>) to what we would expect if a particular claim about the population (a <strong>parameter</strong>) were true. The logic has three parts:</p>
+                    <ul>
+                        <li><strong>Assume a claim is true</strong> (the null hypothesis).</li>
+                        <li><strong>Predict what the data should look like</strong> under that claim.</li>
+                        <li><strong>Measure how far the actual data deviate</strong> — if the deviation is too large to be explained by chance, we doubt the claim.</li>
+                    </ul>
+                </div>
+
+                <div class="extra-box">
+                    <h4>📝 How to Specify H₀ and Hₐ</h4>
+                    <p style="margin: 6px 0; line-height: 1.7;">Every test has two hypotheses:</p>
+                    <ul>
+                        <li><strong>Null hypothesis (<span class="math-inline">H₀</span>):</strong> The “status quo” or “no effect” claim. It always contains <em>equality</em>: <span class="math-inline">=</span>, <span class="math-inline">≤</span>, or <span class="math-inline">≥</span>. Example: <span class="math-inline">H₀: μ = 100</span>.</li>
+                        <li><strong>Alternative hypothesis (<span class="math-inline">Hₐ</span> or <span class="math-inline">H₁</span>):</strong> The research claim — what we hope to find evidence for. It contains <span class="math-inline">≠</span>, <span class="math-inline">&lt;</span>, or <span class="math-inline">&gt;</span>. Example: <span class="math-inline">Hₐ: μ ≠ 100</span>.</li>
+                    </ul>
+                    <p style="margin: 10px 0 6px 0; font-weight: 600; color: #0a3b52;">Three possible forms (for a mean <span class="math-inline">μ</span>):</p>
+                    <table>
+                        <thead>
+                            <tr><th>Type</th><th>H₀</th><th>Hₐ</th><th>Meaning</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Two‑tailed</td><td><span class="math-inline">μ = μ₀</span></td><td><span class="math-inline">μ ≠ μ₀</span></td><td>Any difference from μ₀</td></tr>
+                            <tr><td>Left‑tailed</td><td><span class="math-inline">μ ≥ μ₀</span></td><td><span class="math-inline">μ &lt; μ₀</span></td><td>Specifically smaller than μ₀</td></tr>
+                            <tr><td>Right‑tailed</td><td><span class="math-inline">μ ≤ μ₀</span></td><td><span class="math-inline">μ &gt; μ₀</span></td><td>Specifically larger than μ₀</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin: 8px 0 0 0; color: #4b3a1c; font-size: 0.94rem;"><strong>💡 Tip:</strong> The alternative hypothesis should reflect the research question. Ask: “What am I trying to prove?” — that goes in <span class="math-inline">Hₐ</span>.</p>
+                </div>
+
+                <div class="extra-box">
+                    <h4>⚠️ The Two Types of Errors</h4>
+                    <p style="margin: 6px 0; line-height: 1.7;">Since we decide based on a sample, we can never be 100% certain. There are two possible mistakes:</p>
+                    <table class="error-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>H₀ is actually TRUE</th>
+                                <th>H₀ is actually FALSE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Reject H₀</th>
+                                <td class="type1"><strong>Type I Error (α)</strong><br>False positive — we rejected a true null</td>
+                                <td class="correct"><strong>Correct decision</strong><br>Power = 1 − β</td>
+                            </tr>
+                            <tr>
+                                <th>Fail to reject H₀</th>
+                                <td class="correct"><strong>Correct decision</strong></td>
+                                <td class="type2"><strong>Type II Error (β)</strong><br>False negative — we missed a real effect</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Type I error (<span class="math-inline">α</span>):</strong> Rejecting <span class="math-inline">H₀</span> when it is actually true. Probability = significance level <span class="math-inline">α</span>. Analogy: convicting an innocent person.</li>
+                        <li><strong>Type II error (<span class="math-inline">β</span>):</strong> Failing to reject <span class="math-inline">H₀</span> when <span class="math-inline">Hₐ</span> is actually true. Analogy: letting a guilty person go free.</li>
+                        <li><strong>Power (<span class="math-inline">1 − β</span>):</strong> The probability of correctly rejecting a false <span class="math-inline">H₀</span>. Higher power is better; typically aim for ≥ 0.80.</li>
+                        <li><strong>Trade‑off:</strong> For a fixed sample size, decreasing <span class="math-inline">α</span> (making it harder to reject) increases <span class="math-inline">β</span>. The only way to reduce both is to increase the sample size.</li>
+                    </ul>
+                </div>
+
+                <div class="extra-box">
+                    <h4>🎚️ How to Choose the Significance Level (α)</h4>
+                    <ul>
+                        <li><strong>Conventional choices:</strong> <span class="math-inline">α = 0.05</span> is the default in most fields; <span class="math-inline">α = 0.01</span> for stricter evidence (e.g., medical trials); <span class="math-inline">α = 0.10</span> for exploratory work.</li>
+                        <li><strong>Consider consequences of errors:</strong>
+                            <ul>
+                                <li>If a Type I error is costly (e.g., approving a harmful drug), choose a <strong>smaller</strong> <span class="math-inline">α</span>.</li>
+                                <li>If a Type II error is costly (e.g., missing a real disease), choose a <strong>larger</strong> <span class="math-inline">α</span> or increase power.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Balance with power:</strong> A smaller <span class="math-inline">α</span> requires a larger sample size to maintain acceptable power.</li>
+                        <li><strong>Report the p‑value:</strong> Rather than only saying “significant” or “not significant,” report the exact p‑value so readers can judge the strength of evidence.</li>
+                        <li><strong>Pre‑register:</strong> Choose <span class="math-inline">α</span> <em>before</em> collecting data to avoid p‑hacking.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> For each scenario, state <span class="math-inline">H₀</span> and <span class="math-inline">Hₐ</span>, identify whether it's one‑ or two‑tailed, and describe what a Type I and Type II error would mean in context.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) A coffee shop claims its large latte has 200 mg of caffeine. A customer suspects it's different.</strong>
+                            <br><span class="math-inline">H₀: μ = 200</span>; <span class="math-inline">Hₐ: μ ≠ 200</span> (two‑tailed).
+                            <br><em>Type I:</em> Concluding the caffeine differs when it's actually 200 mg.
+                            <br><em>Type II:</em> Failing to detect a real difference.</li>
+                        <li><strong>(b) A drug is claimed to lower blood pressure. We want to test if it works.</strong>
+                            <br><span class="math-inline">H₀: μ ≥ 0</span> (no reduction or increase); <span class="math-inline">Hₐ: μ &lt; 0</span> (blood pressure decreases). Left‑tailed.
+                            <br><em>Type I:</em> Approving a drug that doesn't work.
+                            <br><em>Type II:</em> Rejecting a drug that actually works.</li>
+                        <li><strong>(c) A manufacturer claims at most 2% of items are defective. A quality inspector suspects it's higher.</strong>
+                            <br><span class="math-inline">H₀: p ≤ 0.02</span>; <span class="math-inline">Hₐ: p &gt; 0.02</span>. Right‑tailed.
+                            <br><em>Type I:</em> Concluding the defect rate is higher when it isn't (unnecessary recall).
+                            <br><em>Type II:</em> Missing a genuinely high defect rate (shipping bad products).</li>
+                    </ul>
+                </div>
+
+                <div class="takeaway">
+                    <strong>Key idea:</strong> A hypothesis test weighs evidence against a null claim. <span class="math-inline">H₀</span> always contains equality; <span class="math-inline">Hₐ</span> reflects the research question. Type I errors (<span class="math-inline">α</span>) are false positives; Type II errors (<span class="math-inline">β</span>) are false negatives. Choose <span class="math-inline">α</span> based on the relative cost of each error and pre‑register it.
+                </div>
+            </div>
+        </details>
+
+        <!-- 14 General Test Statistic -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">14</span>
                 <span class="topic-title">The General Test Statistic: (statistic − null value) / SE</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -988,10 +1131,10 @@
             </div>
         </details>
 
-        <!-- 14 Hypothesis Testing: One Sample -->
+        <!-- 15 Hypothesis Testing: One Sample -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">14</span>
+                <span class="topic-number">15</span>
                 <span class="topic-title">Hypothesis Testing: One Sample (p‑value approach)</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1036,10 +1179,10 @@
             </div>
         </details>
 
-        <!-- 15 Hypothesis Testing: Two Sample -->
+        <!-- 16 Hypothesis Testing: Two Sample -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">15</span>
+                <span class="topic-number">16</span>
                 <span class="topic-title">Hypothesis Testing: Two Sample (p‑value approach)</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1077,10 +1220,10 @@
             </div>
         </details>
 
-        <!-- 16 Connection: Hypothesis Tests ↔ Confidence Intervals -->
+        <!-- 17 Connection: Hypothesis Tests ↔ Confidence Intervals -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">16</span>
+                <span class="topic-number">17</span>
                 <span class="topic-title">Connection: Hypothesis Tests ↔ Confidence Intervals</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1098,7 +1241,7 @@
                     </ul>
                 </div>
 
-                <div class="exercise"><span class="question">📌 Exercise</span> In the coffee example (Topic 14), the 95% CI for <span class="math-inline">μ</span> was (187.05, 196.95). Does this agree with the hypothesis test result?</div>
+                <div class="exercise"><span class="question">📌 Exercise</span> In the coffee example (Topic 15), the 95% CI for <span class="math-inline">μ</span> was (187.05, 196.95). Does this agree with the hypothesis test result?</div>
                 <div class="solution">
                     <strong>✅ Detailed solution</strong>
                     <ul class="solution-steps">
@@ -1115,10 +1258,10 @@
         <!-- PART VI: MORE INFERENCE METHODS                                 -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
 
-        <!-- 17 Chi-Square Tests -->
+        <!-- 18 Chi-Square Tests -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">17</span>
+                <span class="topic-number">18</span>
                 <span class="topic-title">Chi-Square Tests: Goodness-of-Fit & Independence</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1154,10 +1297,10 @@
             </div>
         </details>
 
-        <!-- 18 One-Way ANOVA -->
+        <!-- 19 One-Way ANOVA -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">18</span>
+                <span class="topic-number">19</span>
                 <span class="topic-title">One-Way ANOVA</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1192,10 +1335,10 @@
         <!-- PART VII: REGRESSION & MODELING                                 -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
 
-        <!-- 19 Simple & Multiple Regression -->
+        <!-- 20 Simple & Multiple Regression -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">19</span>
+                <span class="topic-number">20</span>
                 <span class="topic-title">Simple & Multiple Regression</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1230,10 +1373,10 @@
             </div>
         </details>
 
-        <!-- 20 Data Mining -->
+        <!-- 21 Data Mining -->
         <details class="topic-card">
             <summary class="topic-header">
-                <span class="topic-number">20</span>
+                <span class="topic-number">21</span>
                 <span class="topic-title">Introduction to Data Mining</span>
                 <span class="chevron">▼</span>
             </summary>
@@ -1245,4 +1388,153 @@
                     <ul>
                         <li><strong>Training/Test Split:</strong> Randomly divide data into:
                             <ul>
-                                <li><strong>Training set</strong> (e.g., 70–80%): Used to fit
+                                <li><strong>Training set</strong> (e.g., 70–80%): Used to fit the model (estimate coefficients).</li>
+                                <li><strong>Test set</strong> (e.g., 20–30%): Used to evaluate how well the model predicts new, unseen data.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Prediction R‑squared (<span class="math-inline">R²_pred</span>):</strong> Measures the proportion of variance in the test set explained by the model.
+                            <div class="math-block">R²_pred = 1 − [ Σ(yᵢ − ŷᵢ)² / Σ(yᵢ − ȳ)² ]</div>
+                        </li>
+                        <li><strong>RMSE (Root Mean Squared Error):</strong> Measures average prediction error in the original units.
+                            <div class="math-block">RMSE = √[ (1/n) Σ(yᵢ − ŷᵢ)² ]</div>
+                        </li>
+                        <li><strong>Interpretation:</strong> Higher <span class="math-inline">R²_pred</span> (closer to 1) and lower RMSE indicate better predictive performance. Comparing training vs. test metrics helps detect overfitting.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> A dataset of 100 observations is split into 70 training and 30 test observations. A multiple regression model is fit on the training set. On the test set, the sum of squared errors (SSE) is 150, and the total sum of squares (SST) is 600. (a) Compute <span class="math-inline">R²_pred</span> for the test set. (b) Compute RMSE if the test set has <span class="math-inline">n=30</span>. (c) Interpret these values.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) <span class="math-inline">R²_pred</span>:</strong> <span class="math-inline">R²_pred = 1 − SSE/SST = 1 − 150/600 = 1 − 0.25 = 0.75</span>.</li>
+                        <li><strong>(b) RMSE:</strong> <span class="math-inline">RMSE = √(SSE/n) = √(150/30) = √5 ≈ 2.236</span>.</li>
+                        <li><strong>(c) Interpretation:</strong> <span class="math-inline">R²_pred = 0.75</span> → model explains 75% of test variance (good). RMSE ≈ 2.24 → average prediction error. Compare with training metrics to check for overfitting.</li>
+                        <li><strong>Answer:</strong> (a) <span class="math-inline">R²_pred = 0.75</span>. (b) RMSE ≈ 2.24. (c) Good predictive performance.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 22 Control Charts -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">22</span>
+                <span class="topic-title">Control Charts (x̄, R, p)</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Control charts monitor process stability. <span class="math-inline">x̄</span> chart tracks mean, <span class="math-inline">R</span> chart tracks variability, <span class="math-inline">p</span> chart tracks proportion defective. Points outside control limits signal special causes.</div>
+
+                <div class="extra-box">
+                    <h4>📊 p‑Chart Example</h4>
+                    <p style="margin: 8px 0; color: #0c4a68;">A p-chart monitors the proportion of defective items in samples of size <span class="math-inline">n</span>.</p>
+                    <ul>
+                        <li><strong>Center line:</strong> <span class="math-inline">p̄ = total defectives / total inspected</span>.</li>
+                        <li><strong>Standard error:</strong> <span class="math-inline">SE = √(p̄(1−p̄)/n)</span>.</li>
+                        <li><strong>Control limits:</strong> <span class="math-inline">p̄ ± 3·SE</span>.</li>
+                        <li><strong>Example:</strong> 20 samples of <span class="math-inline">n=100</span>. Total defectives = 300. <span class="math-inline">p̄ = 300/2000 = 0.15</span>.</li>
+                        <li><span class="math-inline">SE = √(0.15×0.85/100) = √0.001275 ≈ 0.0357</span>.</li>
+                        <li><span class="math-inline">UCL = 0.15 + 3×0.0357 = 0.2571</span>. <span class="math-inline">LCL = 0.15 − 3×0.0357 = 0.0429</span> (or 0 if negative).</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> An <span class="math-inline">x̄</span> chart uses samples of size <span class="math-inline">n=5</span>. Grand mean <span class="math-inline">x̄̄ = 50</span>, average range <span class="math-inline">R̄ = 4.2</span>. Constants: <span class="math-inline">A₂=0.577, D₃=0, D₄=2.114</span>. (a) Find control limits for <span class="math-inline">x̄</span> and <span class="math-inline">R</span> charts. (b) For a <span class="math-inline">p</span>-chart with <span class="math-inline">n=100</span>, total defectives=300 in 20 samples, find the control limits.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a) <span class="math-inline">x̄</span> chart:</strong> <span class="math-inline">UCL = 50 + 0.577×4.2 = 52.42</span>. <span class="math-inline">LCL = 50 − 2.42 = 47.58</span>.</li>
+                        <li><strong><span class="math-inline">R</span> chart:</strong> <span class="math-inline">UCL = 2.114×4.2 = 8.88</span>. <span class="math-inline">LCL = 0×4.2 = 0</span>.</li>
+                        <li><strong>(b) <span class="math-inline">p</span>-chart:</strong> <span class="math-inline">p̄ = 300/(20×100) = 0.15</span>. <span class="math-inline">SE = √(0.15×0.85/100) ≈ 0.0357</span>.</li>
+                        <li><span class="math-inline">UCL = 0.15 + 3×0.0357 = 0.2571</span>. <span class="math-inline">LCL = 0.15 − 3×0.0357 = 0.0429</span>.</li>
+                        <li><strong>Answer:</strong> (a) <span class="math-inline">x̄</span>: (47.58, 52.42); <span class="math-inline">R</span>: (0, 8.88). (b) <span class="math-inline">p</span>-chart: (0.043, 0.257).</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <!-- 23 Applications: Gacha & LLMs -->
+        <details class="topic-card">
+            <summary class="topic-header">
+                <span class="topic-number">23</span>
+                <span class="topic-title">Applications: Gacha Probability & LLMs</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="topic-body">
+                <div class="intro"><strong>Concept:</strong> Probability and statistics power modern applications — from gacha game mechanics to the probabilistic foundations of large language models (LLMs).</div>
+
+                <div class="extra-box">
+                    <h4>🎮 Gacha Probability: Wuthering Waves</h4>
+                    <ul>
+                        <li><strong>Base rate:</strong> Each pull has approximately <span class="math-inline">p = 0.8% = 0.008</span> chance of a 5★ character.</li>
+                        <li><strong>Hard pity:</strong> Guaranteed 5★ at 80 pulls if none obtained earlier.</li>
+                        <li><strong>Soft pity:</strong> Rate increases starting around pull 65.</li>
+                        <li><strong>50/50 system:</strong> First 5★ has a 50% chance of being featured; if lost, next is guaranteed featured.</li>
+                        <li>Let <span class="math-inline">X</span> = pulls until first 5★. If rate were constant at <span class="math-inline">p = 0.008</span>, then <span class="math-inline">X ~ Geometric(p)</span>.</li>
+                        <li><strong>Geometric CDF:</strong> <span class="math-inline">P(X ≤ n) = 1 − (1−p)ⁿ</span>. For <span class="math-inline">n = 10</span>: <span class="math-inline">1 − (0.992)¹⁰ ≈ 0.0771</span> → ~7.71% chance within 10 pulls.</li>
+                        <li><strong>Expected pulls (without pity):</strong> <span class="math-inline">E(X) = 1/p = 125</span> — which is why pity systems exist!</li>
+                        <li><strong>P(X > 60) = (0.992)⁶⁰ ≈ 0.6176</strong> → ~61.8% chance of needing more than 60 pulls without pity.</li>
+                        <li><strong>50/50 outcome:</strong> First 5★ has 50% chance featured; if lost, next is 100% featured. So within 2 five-stars, you're guaranteed the featured character.</li>
+                    </ul>
+                </div>
+
+                <div class="extra-box">
+                    <h4>🧠 Probability in Large Language Models (LLMs)</h4>
+                    <ul>
+                        <li><strong>Autoregressive modeling:</strong> An LLM defines <span class="math-inline">P(token_t | token_1, …, token_{t−1})</span> — the probability of each possible next token given the context.</li>
+                        <li><strong>Softmax output:</strong> Converts logits to probabilities:
+                            <div class="math-block">P(token_i) = e^{z_i} / Σ_j e^{z_j}</div>
+                        </li>
+                        <li><strong>Cross-entropy loss:</strong> Training minimizes <span class="math-inline">L = −(1/N) Σ log P(correct token)</span> — the same principle as maximum likelihood estimation.</li>
+                        <li><strong>Sampling strategies:</strong>
+                            <ul>
+                                <li><strong>Greedy:</strong> Pick argmax.</li>
+                                <li><strong>Temperature:</strong> Divide logits by T. <span class="math-inline">T→0</span> = greedy; <span class="math-inline">T→∞</span> = uniform.</li>
+                                <li><strong>Top‑k:</strong> Sample only from k highest-probability tokens.</li>
+                                <li><strong>Top‑p (nucleus):</strong> Sample from smallest set whose cumulative probability exceeds p.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Perplexity:</strong> <span class="math-inline">exp(−(1/N) Σ log P(token_i))</span> — lower is better.</li>
+                        <li><strong>Uncertainty & hallucination:</strong> High entropy in the distribution → low-probability, potentially incorrect outputs.</li>
+                    </ul>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise</span> Suppose an LLM outputs the following logits for the next token: <span class="math-inline">z = [2.0, 1.0, 0.5, 0.0]</span> for tokens {A, B, C, D}. (a) Compute the softmax probabilities. (b) What is the perplexity if the correct token is A? (c) With temperature <span class="math-inline">T = 0.5</span>, recompute the probabilities.</div>
+                <div class="solution">
+                    <strong>✅ Detailed solution</strong>
+                    <ul class="solution-steps">
+                        <li><strong>(a)</strong> Softmax: <span class="math-inline">e^{2.0} ≈ 7.389</span>, <span class="math-inline">e^{1.0} ≈ 2.718</span>, <span class="math-inline">e^{0.5} ≈ 1.649</span>, <span class="math-inline">e^{0.0} = 1.0</span>.</li>
+                        <li>Sum = <span class="math-inline">7.389 + 2.718 + 1.649 + 1.0 = 12.756</span>.</li>
+                        <li><span class="math-inline">P(A) ≈ 0.5793</span>, <span class="math-inline">P(B) ≈ 0.2131</span>, <span class="math-inline">P(C) ≈ 0.1293</span>, <span class="math-inline">P(D) ≈ 0.0784</span>.</li>
+                        <li><strong>(b)</strong> Correct token A → cross-entropy = <span class="math-inline">−ln(0.5793) ≈ 0.546</span>. Perplexity = <span class="math-inline">e^{0.546} ≈ 1.726</span>.</li>
+                        <li><strong>(c)</strong> With <span class="math-inline">T = 0.5</span>: <span class="math-inline">z' = [4.0, 2.0, 1.0, 0.0]</span>. Sum <span class="math-inline">≈ 65.707</span>.</li>
+                        <li><span class="math-inline">P(A) ≈ 0.831</span>, <span class="math-inline">P(B) ≈ 0.112</span>, <span class="math-inline">P(C) ≈ 0.041</span>, <span class="math-inline">P(D) ≈ 0.015</span>.</li>
+                        <li>Lower temperature → sharper, more confident distribution.</li>
+                        <li><strong>Answer:</strong> (a) [0.579, 0.213, 0.129, 0.078]. (b) Perplexity ≈ 1.73. (c) Sharper distribution: [0.831, 0.112, 0.041, 0.015].</li>
+                    </ul>
+                </div>
+
+                <div class="takeaway">
+                    <strong>Key idea:</strong> The same probability concepts — Geometric, Poisson, Exponential, conditional probability — power gacha mechanics, blockchain hashing, and the softmax/temperature/perplexity pipeline behind modern AI. Master the foundations, and you can reason about any of them.
+                </div>
+            </div>
+        </details>
+
+    </div>
+
+    <footer>Problem‑solving introduction · 23 topics · Foundations, inference, regression, and modern applications.</footer>
+</div>
+
+<script>
+    function expandAll() {
+        document.querySelectorAll('details.topic-card').forEach(function(d) {
+            d.open = true;
+        });
+    }
+    function collapseAll() {
+        document.querySelectorAll('details.topic-card').forEach(function(d) {
+            d.open = false;
+        });
+    }
+</script>
+</body>
+</html>
