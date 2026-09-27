@@ -186,14 +186,9 @@
         }
         .term-box h4 { margin: 0 0 12px 0; color: #9d174d; font-size: 1.12rem; font-weight: 700; }
         .term-box p { margin: 6px 0; line-height: 1.7; color: #1b3f52; }
-        .term-box .term-item {
-            margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px dashed #f0c0d8;
-        }
+        .term-box .term-item { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px dashed #f0c0d8; }
         .term-box .term-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .term-box .term-name {
-            font-weight: 700; color: #9d174d; font-size: 1.05rem;
-            display: block; margin-bottom: 6px;
-        }
+        .term-box .term-name { font-weight: 700; color: #9d174d; font-size: 1.05rem; display: block; margin-bottom: 6px; }
 
         /* Flow diagrams */
         .bayes-flow, .inference-flow {
@@ -223,12 +218,8 @@
         .bayes-arrow, .inference-arrow { font-size: 1.7rem; color: #1d7aa6; font-weight: bold; }
 
         /* Tables */
-        table {
-            width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.92rem;
-        }
-        table th, table td {
-            border: 1px solid #bdd8e8; padding: 8px 12px; text-align: center;
-        }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.92rem; }
+        table th, table td { border: 1px solid #bdd8e8; padding: 8px 12px; text-align: center; }
         table th { background: #d9ecf7; color: #0a3b52; font-weight: 600; }
         table td { background: #fff; }
 
@@ -293,6 +284,7 @@
         .r-code .string { color: #ce9178; }
         .r-code .comment { color: #6a9955; }
         .r-code .func { color: #dcdcaa; }
+        .r-code .num { color: #b5cea8; }
 
         footer { margin-top: 48px; text-align: center; font-size: 0.9rem; color: #497a96; }
 
@@ -1060,7 +1052,7 @@
             </div>
         </details>
 
-        <!-- 08 -->
+        <!-- 08 — WITH R INTRODUCTION ADDED -->
         <details class="topic-card">
             <summary class="topic-header">
                 <span class="topic-number">08</span>
@@ -1137,25 +1129,115 @@
                     <div class="math-block">E(x̄) = μ &nbsp;&nbsp;&nbsp; E(p̂) = p &nbsp;&nbsp;&nbsp; E(s²) = σ²</div>
                 </div>
 
+                <!-- ═══════════════════════════════════════════════════════════ -->
+                <!-- NEW: A VERY BRIEF INTRODUCTION TO R                         -->
+                <!-- ═══════════════════════════════════════════════════════════ -->
+                <div class="extra-box" style="border-color: #be185d; background: #fdf4ff;">
+                    <h4 style="color: #9d174d;">💻 A Very Brief Introduction to R</h4>
+                    <p style="margin: 6px 0 12px 0; line-height: 1.7;">R is a free programming language designed for statistics. Before we make plots, we need to know how R stores data and how to compute basic summaries. Here are the four building blocks.</p>
+
+                    <p style="margin: 12px 0 6px 0; font-weight: 600; color: #9d174d;">1. Vectors — an ordered collection of values of the same type.</p>
+                    <p style="margin: 4px 0 8px 0; line-height: 1.7;">A vector is the most basic data structure. The <code style="background:#f0e0ec; padding:2px 6px; border-radius:6px;">c()</code> function combines values into a vector.</p>
+                    <div class="r-code"><span class="comment"># Create a numeric vector of 7 test scores</span>
+scores &lt;- <span class="func">c</span>(<span class="num">12</span>, <span class="num">15</span>, <span class="num">18</span>, <span class="num">20</span>, <span class="num">22</span>, <span class="num">25</span>, <span class="num">30</span>)
+
+<span class="comment"># Access the 3rd element</span>
+scores[<span class="num">3</span>]
+<span class="comment">#> [1] 18</span>
+
+<span class="comment"># A character vector</span>
+groups &lt;- <span class="func">c</span>(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"A"</span>, <span class="string">"B"</span>)</div>
+
+                    <p style="margin: 16px 0 6px 0; font-weight: 600; color: #9d174d;">2. Data frames — a table where each column is a vector.</p>
+                    <p style="margin: 4px 0 8px 0; line-height: 1.7;">A data frame is the most common structure for datasets in R. Each column can have a different type, but all columns must have the same number of rows.</p>
+                    <div class="r-code"><span class="comment"># Create a data frame with two columns</span>
+df &lt;- <span class="func">data.frame</span>(
+  score = <span class="func">c</span>(<span class="num">12</span>, <span class="num">15</span>, <span class="num">18</span>, <span class="num">20</span>, <span class="num">22</span>, <span class="num">25</span>, <span class="num">30</span>),
+  group = <span class="func">c</span>(<span class="string">"A"</span>, <span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"B"</span>, <span class="string">"B"</span>, <span class="string">"A"</span>, <span class="string">"A"</span>)
+)
+
+<span class="comment"># Access a column with $</span>
+df$score
+<span class="comment">#> [1] 12 15 18 20 22 25 30</span></div>
+
+                    <p style="margin: 16px 0 6px 0; font-weight: 600; color: #9d174d;">3. Lists — a container that can hold anything, including other lists.</p>
+                    <p style="margin: 4px 0 8px 0; line-height: 1.7;">A list is more flexible than a vector or data frame. It can hold values of different types and different lengths — including other vectors, data frames, or functions.</p>
+                    <div class="r-code"><span class="comment"># Create a list holding several things</span>
+result &lt;- <span class="func">list</span>(
+  scores = <span class="func">c</span>(<span class="num">12</span>, <span class="num">15</span>, <span class="num">18</span>),
+  label = <span class="string">"test scores"</span>,
+  mean_score = <span class="num">15</span>
+)
+
+<span class="comment"># Access elements with $ or [[ ]]</span>
+result$label
+<span class="comment">#> [1] "test scores"</span>
+result[[<span class="num">1</span>]]
+<span class="comment">#> [1] 12 15 18</span></div>
+
+                    <p style="margin: 16px 0 6px 0; font-weight: 600; color: #9d174d;">4. Functions — reusable blocks of code that take input and return output.</p>
+                    <p style="margin: 4px 0 8px 0; line-height: 1.7;">R comes with many built-in statistical functions. The most useful for descriptive statistics are <code style="background:#f0e0ec; padding:2px 6px; border-radius:6px;">mean()</code>, <code style="background:#f0e0ec; padding:2px 6px; border-radius:6px;">sd()</code>, <code style="background:#f0e0ec; padding:2px 6px; border-radius:6px;">median()</code>, and <code style="background:#f0e0ec; padding:2px 6px; border-radius:6px;">summary()</code>.</p>
+                    <div class="r-code">scores &lt;- <span class="func">c</span>(<span class="num">12</span>, <span class="num">15</span>, <span class="num">18</span>, <span class="num">20</span>, <span class="num">22</span>, <span class="num">25</span>, <span class="num">30</span>)
+
+<span class="comment"># Arithmetic mean</span>
+<span class="func">mean</span>(scores)
+<span class="comment">#> [1] 20.28571</span>
+
+<span class="comment"># Sample standard deviation (divides by n − 1)</span>
+<span class="func">sd</span>(scores)
+<span class="comment">#> [1] 6.074897</span>
+
+<span class="comment"># Median</span>
+<span class="func">median</span>(scores)
+<span class="comment">#> [1] 20</span>
+
+<span class="comment"># Five-number summary plus mean</span>
+<span class="func">summary</span>(scores)
+<span class="comment">#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class="comment">#>   12.00   15.00   20.00   20.29   25.00   30.00 </span>
+
+<span class="comment"># Define your own function: range = max − min</span>
+my_range &lt;- <span class="keyword">function</span>(x) {
+  <span class="func">max</span>(x) - <span class="func">min</span>(x)
+}
+<span class="func">my_range</span>(scores)
+<span class="comment">#> [1] 18</span></div>
+
+                    <p style="margin: 12px 0 0 0; line-height: 1.7;"><strong>Key takeaway:</strong> vectors hold values, data frames hold tables, lists hold anything, and functions compute things. Once you have those four ideas, everything else in R is a variation on them.</p>
+                </div>
+
                 <div class="extra-box">
                     <h4>📊 Percentiles, Plots & R (ggplot2)</h4>
                     <ul>
                         <li><strong>Percentile:</strong> Value below which p% of data fall.</li>
                         <li><strong>Histogram:</strong> Distribution shape.</li>
                         <li><strong>Boxplot:</strong> Median, Q1, Q3, IQR, outliers.</li>
+                        <li><strong>Barplot:</strong> Counts for categorical variables.</li>
+                        <li><strong>Piechart:</strong> Proportions (with caution).</li>
+                        <li><strong>Scatterplot:</strong> Relationship between two quantitative variables.</li>
                     </ul>
+                    <p style="margin: 12px 0 6px 0; font-weight: 600; color: #0a3b52;">📦 R code using ggplot2:</p>
                     <div class="r-code"><span class="comment"># Load library</span>
 <span class="func">library</span>(ggplot2)
 
 <span class="comment"># Histogram</span>
 <span class="func">ggplot</span>(data, <span class="func">aes</span>(x = variable)) +
-  <span class="func">geom_histogram</span>(binwidth = 5, fill = <span class="string">"steelblue"</span>, color = <span class="string">"white"</span>)
+  <span class="func">geom_histogram</span>(binwidth = <span class="num">5</span>, fill = <span class="string">"steelblue"</span>, color = <span class="string">"white"</span>)
 
 <span class="comment"># Boxplot</span>
 <span class="func">ggplot</span>(data, <span class="func">aes</span>(x = group, y = value)) +
   <span class="func">geom_boxplot</span>(fill = <span class="string">"lightblue"</span>)
 
-<span class="comment"># Scatterplot</span>
+<span class="comment"># Barplot</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = category)) +
+  <span class="func">geom_bar</span>(fill = <span class="string">"coral"</span>)
+
+<span class="comment"># Piechart</span>
+<span class="func">ggplot</span>(data, <span class="func">aes</span>(x = <span class="string">""</span>, y = count, fill = category)) +
+  <span class="func">geom_bar</span>(stat = <span class="string">"identity"</span>) +
+  <span class="func">coord_polar</span>(<span class="string">"y"</span>)
+
+<span class="comment"># Scatterplot with linear fit</span>
 <span class="func">ggplot</span>(data, <span class="func">aes</span>(x = x_var, y = y_var)) +
   <span class="func">geom_point</span>() +
   <span class="func">geom_smooth</span>(method = <span class="string">"lm"</span>, se = <span class="keyword">FALSE</span>)</div>
@@ -1212,6 +1294,27 @@
                                 <li>Dividing by <span class="math-inline">n</span> systematically <em>underestimates</em> the population variance.</li>
                                 <li><span class="math-inline">E[Σ(xᵢ − x̄)² / n] = σ² (n − 1)/n &lt; σ²</span>.</li>
                                 <li>Using <span class="math-inline">n − 1</span> (Bessel's correction) corrects the bias.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise"><span class="question">📌 Exercise 5 (R Practice)</span> In R, create a vector of the five values 4, 8, 15, 16, 23. Compute the mean, standard deviation, and median. Then define a function that returns the range (max minus min) and apply it.
+                    <br><button class="solution-toggle" onclick="toggleSolution(this)"><span class="toggle-icon">▶</span> Show Solution</button>
+                    <div class="solution-panel">
+                        <div class="solution">
+                            <strong>✅ Detailed solution</strong>
+                            <ul class="solution-steps">
+                                <li>Create the vector: <code style="background:#eef5fa; padding:2px 6px; border-radius:6px;">x &lt;- c(4, 8, 15, 16, 23)</code>.</li>
+                                <li>Mean: <code style="background:#eef5fa; padding:2px 6px; border-radius:6px;">mean(x)</code> = 13.2.</li>
+                                <li>Standard deviation: <code style="background:#eef5fa; padding:2px 6px; border-radius:6px;">sd(x)</code> ≈ 7.463.</li>
+                                <li>Median: <code style="background:#eef5fa; padding:2px 6px; border-radius:6px;">median(x)</code> = 15.</li>
+                                <li>Custom range function:
+                                    <div class="r-code">my_range &lt;- <span class="keyword">function</span>(x) { <span class="func">max</span>(x) - <span class="func">min</span>(x) }
+<span class="func">my_range</span>(x)
+<span class="comment">#> [1] 19</span></div>
+                                </li>
+                                <li><strong>Answer:</strong> Mean = 13.2, sd ≈ 7.463, median = 15, range = 19.</li>
                             </ul>
                         </div>
                     </div>
